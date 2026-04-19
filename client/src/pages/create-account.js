@@ -1,4 +1,4 @@
-const signupForm = document.getElementById('signupForm');
+const signupButton = document.querySelector('create-btn');
 
 signupForm.addEventListener('submit', function(event) {
     event.preventDefault(); // Prevents the page from refreshing
