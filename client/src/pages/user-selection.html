@@ -12,7 +12,7 @@
         <p class="subtitle">Choose the role that matches your responsibilities</p>
         <!--the container for the employee card-->
         <div class="cards-container">
-            <div class="role-card selected" onclick="selectRole(this)">
+            <div class="role-card selected" onclick="selectRole(this)" data-url="EmployeeDashboard.html">
                 <!--container for the employee icon-->
                 <div class="icon-container">
                     <i data-lucide="user-cog"></i>
@@ -21,7 +21,7 @@
                 <p class="role-description">Register waste pickers and record transactions</p>
             </div>
             <!--the container for the admin card-->
-            <div class="role-card" onclick="selectRole(this)">
+            <div class="role-card" onclick="selectRole(this)" data-url="admin-dashboard.html">
                 <!--container for the admin icon-->
                 <div class="icon-container">
                     <i data-lucide="shield-check"></i>
@@ -30,7 +30,7 @@
                 <p class="role-description">Manage pricing and monitor operations</p>
             </div>
             <!--the container for the super admin card-->
-            <div class="role-card" onclick="selectRole(this)">
+            <div class="role-card" onclick="selectRole(this)" data-url="SuperAdminDashboard.html">
                  <!--container for the super admin icon-->
                 <div class="icon-container">
                     <i data-lucide="shield"></i>
