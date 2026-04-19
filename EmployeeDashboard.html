@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <link rel="stylesheet" href="EmployeeDashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="topbar">
+  <div class="topbar-brand">
+    <div class="ecocycle-logo">
+      <div class="brand-icon">
+        <svg width="22" height="22" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"></path><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"></path><path d="m14 16-3 3 3 3"></path><path d="M8.293 13.596 7.196 9.5 3.1 10.598"></path><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"></path><path d="m13.378 9.633 4.096 1.098 1.097-4.096"></path></svg>
+      </div>
+      <div>
+        <div class="ecocycle-wordmark">Ecocycle</div>
+        <div class="ecocycle-sub">Informal Pickers Management</div>
+      </div>
+    </div>
+  </div>
+  <button class="topbar-logout">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m16 17 5-5-5-5"></path><path d="M21 12H9"></path><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path></svg>
+    Logout
+  </button>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <a class="nav-item active" href="EmployeeDashboard.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="RegisterUsers.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
+      Register Waste Picker
+    </a>
+    <a class="nav-item" href="ViewRegisteredUser.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><path d="M16 3.128a4 4 0 0 1 0 7.744"></path><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><circle cx="9" cy="7" r="4"></circle></svg>
+      Registered Pickers
+    </a>
+    <a class="nav-item" href="RecordTransaction_Employee.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+      Record Transaction
+    </a>
+    <a class="nav-item" href="#">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" x2="12" y1="1" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+      Income Board
+    </a>
+    <a class="nav-item" href="#">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"></path><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"></path></svg>
+      Environmental Dashboard
+    </a>
+  </aside>
+
+  <main class="main">
+    <h1 class="page-title">Employee Dashboard</h1>
+    <p class="page-sub">Manage waste pickers and transactions</p>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-card-left">
+          <h4>Total Income</h4>
+          <div class="value">R 24,580</div>
+          <div class="caption">This month</div>
+        </div>
+        <div class="stat-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" x2="12" y1="1" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-left">
+          <h4>Materials Recorded</h4>
+          <div class="value">1,248 kg</div>
+          <div class="caption">This week</div>
+        </div>
+        <div class="stat-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card-left">
+          <h4>Active Pickers</h4>
+          <div class="value">47</div>
+          <div class="caption">Registered</div>
+        </div>
+        <div class="stat-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="charts-row">
+      <div class="section-card">
+        <div class="section-title">Monthly Collections (kg)</div>
+        <div class="chart-wrap"><canvas id="lineChart" width="406" height="257" style="display: block; box-sizing: border-box; height: 220px; width: 347.6px;"></canvas></div>
+      </div>
+      <div class="section-card">
+        <div class="section-title">Material Breakdown</div>
+        <div class="chart-wrap"><canvas id="donutChart" width="351" height="257" style="display: block; box-sizing: border-box; height: 220px; width: 300px;"></canvas></div>
+      </div>
+    </div>
+
+   
+    <div class="section-card">
+      <div class="section-title">Recent Activity</div>
+      <div class="activity-item">
+        <div class="activity-left"><h4>John Mthembu</h4><p>Plastic</p></div>
+        <div class="activity-right"><div class="amount">R 145</div><div class="time">2 hours ago</div></div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-left"><h4>Sarah Ndlovu</h4><p>Paper</p></div>
+        <div class="activity-right"><div class="amount">R 89</div><div class="time">3 hours ago</div></div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-left"><h4>David Zuma</h4><p>Metal</p></div>
+        <div class="activity-right"><div class="amount">R 220</div><div class="time">5 hours ago</div></div>
+      </div>
+      <div class="activity-item">
+        <div class="activity-left"><h4>Nomsa Dlamini</h4><p>Glass</p></div>
+        <div class="activity-right"><div class="amount">R 64</div><div class="time">Yesterday</div></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src = "EmployeeDashboard.js"></script>
+</body>
+</html>
+
