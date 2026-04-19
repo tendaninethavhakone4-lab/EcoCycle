@@ -6,14 +6,14 @@
 }
 
 body {
-    background-color: #F6F0E4; /* Cream background */
+    background-color: #F6F0E4; 
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
 
-/* The Card: Compact width to match your images */
+
 .container{
     background-color: #ffffff;
     width: 350px; 
@@ -66,7 +66,7 @@ input:focus {
     border-color: #579D3E;
 }
 
-/* The exact green from your screenshot */
+
 .btn{
     width: 100%;
     background-color: #579D3E;
