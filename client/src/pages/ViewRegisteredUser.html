@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="ViewRegistered.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    </head>
+<body>
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="ecocycle-logo">
+      <div class="brand-icon">
+        <svg width="22" height="22" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
+      </div>
+      <div>
+        <div class="ecocycle-wordmark">Ecocycle</div>
+        <div class="ecocycle-sub">Informal Pickers Management</div>
+      </div>
+    </div>
+  </div>
+  <button class="topbar-logout">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+    Logout
+  </button>
+</header>
+ 
+<div class="layout">
+ 
+
+  <aside class="sidebar">
+    <a class="nav-item" href="EmployeeDashboard.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="RegisterUsers.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+      Register Waste Picker
+    </a>
+    <a class="nav-item active" href="ViewRegisteredUser.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+      Registered Pickers
+    </a>
+    <a class="nav-item" href="#">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+      Record Transaction
+    </a>
+    <a class="nav-item" href="#">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Income Board
+    </a>
+    <a class="nav-item" href="#">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+      Environmental Dashboard
+    </a>
+  </aside>
+ 
+
+  <main class="main">
+    <h1 class="page-title">Registered Pickers</h1>
+    <p class="page-sub">All waste pickers currently in the system</p>
+ 
+
+    <div class="mini-stats">
+      <div class="mini-stat">
+        <h4>Total Pickers</h4>
+        <div class="val" id="stat-total">0</div>
+        <div class="sub">Registered</div>
+      </div>
+      <div class="mini-stat">
+        <h4>Active This Week</h4>
+        <div class="val" id="stat-active">0</div>
+        <div class="sub">Submitted collections</div>
+      </div>
+      <div class="mini-stat">
+        <h4>Total Collected</h4>
+        <div class="val" id="stat-kg">0 kg</div>
+        <div class="sub">All time</div>
+      </div>
+      <div class="mini-stat">
+        <h4>Total Paid Out</h4>
+        <div class="val" id="stat-earnings">R 0</div>
+        <div class="sub">All time</div>
+      </div>
+    </div>
+ 
+
+    <div class="controls-bar">
+      <div class="search-wrap">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="search-input" placeholder="Search by name, ID or zone..." oninput="renderTable()"/>
+      </div>
+      <select class="filter-select" id="zone-filter" onchange="renderTable()">
+        <option value="">All Zones</option>
+        <option>Zone A — Johannesburg CBD</option>
+        <option>Zone B — Soweto</option>
+        <option>Zone C — Sandton</option>
+        <option>Zone D — Alexandra</option>
+        <option>Zone E — Randburg</option>
+      </select>
+      <a href="CodeB_RegisterPicker.html" class="btn btn-primary">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" x2="12" y1="5" y2="19"/><line x1="5" x2="19" y1="12" y2="12"/></svg>
+        Add Picker
+      </a>
+    </div>
+
+    <div class="table-card">
+      <div class="table-header">
+        <span class="table-header-title">Picker Directory</span>
+        <span class="count-badge" id="count-badge">0 pickers</span>
+      </div>
+      <div id="table-body-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Picker</th>
+              <th>Zone</th>
+              <th>Primary Material</th>
+              <th>Phone</th>
+              <th>Joined</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="pickers-tbody"></tbody>
+        </table>
+        <div class="empty-state hidden" id="empty-state">
+          <div class="icon">👤</div>
+          <h3>No pickers found</h3>
+          <p>Register a new picker or adjust your search filters.</p>
+          <a href="CodeB_RegisterPicker.html" class="btn btn-primary">Register First Picker</a>
+        </div>
+      </div>
+    </div>
+ 
+  </main>
+</div>
+
+<div class="modal-overlay" id="view-modal">
+  <div class="modal">
+    <div class="modal-title" id="modal-name">—</div>
+    <div class="modal-row">
+      <div class="modal-field"><label>Picker ID</label><span id="m-id">—</span></div>
+      <div class="modal-field"><label>Date Joined</label><span id="m-joined">—</span></div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field"><label>Phone</label><span id="m-phone">—</span></div>
+      <div class="modal-field"><label>Gender</label><span id="m-gender">—</span></div>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="modal-row">
+      <div class="modal-field"><label>Zone</label><span id="m-zone">—</span></div>
+      <div class="modal-field"><label>Primary Material</label><span id="m-material">—</span></div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field"><label>Payment Method</label><span id="m-payment">—</span></div>
+      <div class="modal-field"><label>Total Collected</label><span id="m-kg">0 kg</span></div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field"><label>Address</label><span id="m-address">—</span></div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field"><label>Notes</label><span id="m-notes">—</span></div>
+    </div>
+    <div class="modal-btns">
+      <button class="modal-close" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+</div>
+ 
+
+<div class="toast" id="toast">
+  <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+  <span id="toast-msg"></span>
+</div>
+<script src = "ViewRegistered.js"></script>
+</body>
+</html>
