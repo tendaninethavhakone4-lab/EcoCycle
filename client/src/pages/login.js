@@ -6,6 +6,8 @@ loginForm.addEventListener('submit', function(event) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
 
-    console.log("Login Attempt:", email, password);
+    console.log("Login Attempt:", email);
     alert("Signing in with: " + email);
+
+     window.location.href = "user-selection.html";
 });
