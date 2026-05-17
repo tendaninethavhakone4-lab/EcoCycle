@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Staff · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Staff Oversight</div><div class="page-sub">Live user roster</div></div></div>
+    <div class="section"><div class="table-wrap"><table><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Branch</th><th>Status</th></tr></thead><tbody id="staffBody"><tr><td colspan="5" class="muted" style="text-align:center;padding:24px">Loading…</td></tr></tbody></table></div></div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["admin","superadmin"]);
+  renderShell("admin");
+  (async () => {
+    const { users = [] } = await api("/users");
+    const body = document.getElementById("staffBody");
+    body.innerHTML = users.length ? users.map(u => `<tr>
+      <td><strong>${u.name||"—"}</strong></td>
+      <td>${u.email||""}</td>
+      <td>${u.role||""}</td>
+      <td>${u.branch||"—"}</td>
+      <td><span class="status ${(u.status||'active').toLowerCase()}">${u.status||"Active"}</span></td>
+    </tr>`).join("") : `<tr><td colspan="5" class="muted" style="text-align:center;padding:24px">No staff yet</td></tr>`;
+  })().catch(e => { document.getElementById("staffBody").innerHTML = `<tr><td colspan="5" class="muted" style="text-align:center;padding:24px">${e.message}</td></tr>`; });
+</script>
+</body>
+</html>

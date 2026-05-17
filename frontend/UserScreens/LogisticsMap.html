@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Logistics Map · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Logistics Map</div><div class="page-sub">Live picker locations & pickup routes</div></div></div>
+    <div class="grid" style="grid-template-columns:2fr 1fr;gap:24px">
+      <div id="map" style="height:560px;border-radius:14px;overflow:hidden;background:#0f172a"></div>
+      <div class="section" style="margin-top:0">
+        <div class="section-title">Live Pickups</div>
+        <div id="pickList" style="display:flex;flex-direction:column;gap:10px">
+          <p class="muted">Loading…</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["user","admin","superadmin"]);
+  renderShell("user");
+  (async () => {
+    await window.EcoCycle.ready;
+    await window.EcoCycle.loadLeaflet();
+    const map = L.map("map").setView([-26.2041, 28.0473], 6);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution:"&copy; OSM" }).addTo(map);
+    try {
+      const { pickups = [] } = await api("/logistics/pickups");
+      const list = document.getElementById("pickList");
+      if(!pickups.length){ list.innerHTML = '<p class="muted">No live pickups yet.</p>'; return; }
+      list.innerHTML = pickups.map(p => `<div class="card"><strong>${p.id||p.pickup_id||""}</strong><div class="muted">${p.picker_name||""} · ${p.branch||""}${p.eta ? " · ETA " + p.eta : ""}</div></div>`).join("");
+      const bounds = [];
+      pickups.forEach(p => {
+        if(p.lat && p.lng){
+          L.marker([p.lat, p.lng]).addTo(map).bindPopup(`<strong>${p.id||""}</strong><br>${p.picker_name||""}`);
+          bounds.push([p.lat, p.lng]);
+        }
+      });
+      if(bounds.length) map.fitBounds(bounds, { padding:[40,40] });
+    } catch(e){
+      document.getElementById("pickList").innerHTML = `<p class="muted">${e.message}</p>`;
+    }
+  })().catch(console.warn);
+</script>
+</body>
+</html>

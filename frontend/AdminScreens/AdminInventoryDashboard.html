@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Inventory · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Inventory Dashboard</div><div class="page-sub">Live stock by material</div></div></div>
+    <div class="grid grid-4">
+      <div class="card kpi"><h3>Materials Tracked</h3><div class="value" id="kInvCount">—</div></div>
+      <div class="card kpi"><h3>Total Stock</h3><div class="value" id="kInvTotal">—</div></div>
+      <div class="card kpi"><h3>Low-Stock Alerts</h3><div class="value" id="kInvLow">—</div></div>
+      <div class="card kpi"><h3>Below Threshold</h3><div class="value" id="kInvBelow">—</div></div>
+    </div>
+    <div class="section"><div class="section-title">Stock by Material</div><div class="table-wrap"><table><thead><tr><th>Material</th><th>Stock</th><th>Threshold</th><th>Status</th></tr></thead><tbody data-live-table="inventory"></tbody></table></div></div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["admin","superadmin"]);
+  renderShell("admin");
+  (async () => {
+    const { list = [] } = await api("/inventory");
+    document.getElementById("kInvCount").textContent = list.length;
+    const total = list.reduce((a,r) => a + Number(r.stock_kg||0), 0);
+    document.getElementById("kInvTotal").textContent = total.toLocaleString() + " kg";
+    const low = list.filter(r => Number(r.stock_kg||0) < Number(r.threshold_kg||0));
+    document.getElementById("kInvLow").textContent = low.length;
+    document.getElementById("kInvBelow").textContent = low.map(r => r.material).join(", ") || "None";
+  })().catch(console.warn);
+</script>
+</body>
+</html>

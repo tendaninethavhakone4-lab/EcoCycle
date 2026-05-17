@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Executive Reports · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Executive Reports</div><div class="page-sub">Generate live global reports</div></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>Revenue Report</h3><p class="muted mt-2">All transactions (CSV)</p><button class="btn btn-secondary btn-sm mt-3" data-rep="transactions" data-fmt="csv">Download CSV</button></div>
+      <div class="card"><h3>Impact Report</h3><p class="muted mt-2">Sustainability metrics (CSV)</p><button class="btn btn-secondary btn-sm mt-3" data-rep="impact" data-fmt="csv">Download CSV</button></div>
+      <div class="card"><h3>Pickers Report</h3><p class="muted mt-2">All pickers (CSV)</p><button class="btn btn-secondary btn-sm mt-3" data-rep="pickers" data-fmt="csv">Download CSV</button></div>
+      <div class="card"><h3>Branches Report</h3><p class="muted mt-2">All branches (CSV)</p><button class="btn btn-secondary btn-sm mt-3" data-rep="branches" data-fmt="csv">Download CSV</button></div>
+      <div class="card"><h3>Sales Report</h3><p class="muted mt-2">Marketplace sales (CSV)</p><button class="btn btn-secondary btn-sm mt-3" data-rep="sales" data-fmt="csv">Download CSV</button></div>
+      <div class="card"><h3>Audit Report</h3><p class="muted mt-2">Audit trail (CSV)</p><button class="btn btn-secondary btn-sm mt-3" data-rep="audit" data-fmt="csv">Download CSV</button></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["superadmin"]);
+  renderShell("superadmin");
+  document.querySelectorAll("[data-rep]").forEach(btn => {
+    btn.onclick = async () => {
+      const type = btn.dataset.rep;
+      try { const r = await api("/reports/" + type); const rows = r.rows||r[type]||r||[];
+        if(!rows.length) return toast("No data yet","error");
+        EcoCycle.CSV.download(`${type}-${Date.now()}.csv`, rows);
+      } catch(e){ toast(e.message,"error"); }
+    };
+  });
+</script>
+</body>
+</html>

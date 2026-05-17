@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dashboard · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header">
+      <div>
+        <div class="crumbs"><i data-lucide="home" style="width:14px;height:14px"></i><span>Workspace</span><span class="sep">/</span><span style="color:var(--secondary)">Dashboard</span></div>
+        <div class="page-title">Welcome back, <span id="welcomeName">Operator</span></div>
+        <div class="page-sub">Here's what's happening at your hub today.</div>
+      </div>
+      <div class="row">
+        <a href="QRScanFlow.html" class="btn btn-secondary"><i data-lucide="qr-code"></i>Scan QR</a>
+        <a href="TransactionFlow(Wizard).html" class="btn btn-primary"><i data-lucide="plus"></i>New Transaction</a>
+      </div>
+    </div>
+
+    <!-- Hero CTA card -->
+    <div class="hero-card animate-in" style="margin-bottom:24px">
+      <div style="display:flex; justify-content:space-between; gap:24px; align-items:center; flex-wrap:wrap">
+        <div>
+          <div style="display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,0.15); padding:6px 12px; border-radius:999px; font-size:12px; font-weight:700; margin-bottom:14px"><i data-lucide="trending-up" style="width:14px;height:14px"></i>YOUR LIVE HUB</div>
+          <h2>Welcome back.</h2>
+          <p>Your hub data updates in real time. Log a new pickup or onboard a picker to grow your impact.</p>
+          <div style="display:flex; gap:12px; flex-wrap:wrap">
+            <a href="WastePickerManagement.html" class="btn btn-primary"><i data-lucide="user-plus"></i>Onboard picker</a>
+            <a href="Insights&Impact.html" class="btn btn-secondary" style="background:rgba(255,255,255,0.1); color:#fff; border:1px solid rgba(255,255,255,0.3)"><i data-lucide="line-chart"></i>View impact</a>
+          </div>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(2,auto); gap:24px; flex-shrink:0">
+          <div><div style="font-size:32px;font-weight:800" data-live="kpi.trees">—</div><div style="opacity:0.85;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">Trees equivalent</div></div>
+          <div><div style="font-size:32px;font-weight:800" data-live="kpi.co2">—</div><div style="opacity:0.85;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em">CO₂ saved (kg)</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI grid -->
+    <div class="grid grid-4">
+      <div class="card kpi"><h3>Transactions</h3><div class="value" data-live="kpi.txCount">—</div><div class="delta">live</div></div>
+      <div class="card kpi"><h3>Total Kg Collected</h3><div class="value" data-live="kpi.totalKg">—</div><div class="delta">live</div></div>
+      <div class="card kpi"><h3>Earnings Issued</h3><div class="value" data-live="kpi.totalPaid">—</div><div class="delta">live</div></div>
+      <div class="card kpi"><h3>Active Pickers</h3><div class="value" data-live="kpi.activePickers">—</div><div class="delta">live</div></div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="grid grid-4 mt-4">
+      <a class="action-tile" href="TransactionFlow(Wizard).html"><div class="icon"><i data-lucide="plus-circle"></i></div><div><h4>New Transaction</h4><p>Log a fresh pickup</p></div></a>
+      <a class="action-tile" href="QRScanFlow.html"><div class="icon"><i data-lucide="qr-code"></i></div><div><h4>Scan Picker QR</h4><p>Quick verification</p></div></a>
+      <a class="action-tile" href="Marketplace&Sales.html"><div class="icon"><i data-lucide="shopping-cart"></i></div><div><h4>Sell Materials</h4><p>List your stock</p></div></a>
+      <a class="action-tile" href="LogisticsMap.html"><div class="icon"><i data-lucide="map-pin"></i></div><div><h4>Live Map</h4><p>Track collections</p></div></a>
+    </div>
+
+    <!-- Charts -->
+    <div class="grid grid-2 mt-4">
+      <div class="section">
+        <div class="section-title">Weekly Collection (kg)</div>
+        <div id="weeklyChart" style="height:240px"></div>
+      </div>
+      <div class="section">
+        <div class="section-title">Material Mix</div>
+        <div id="materialDonut" style="height:240px"></div>
+      </div>
+    </div>
+
+    <!-- Recent Transactions -->
+    <div class="section">
+      <div class="section-title">Recent Transactions <a href="TransactionLogs&Ledger.html" class="btn btn-ghost btn-sm">View all <i data-lucide="arrow-right" style="width:14px;height:14px"></i></a></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>ID</th><th>Picker</th><th>Material</th><th>Weight</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody data-live-table="transactions" data-limit="8"></tbody>
+      </table></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["user","admin","superadmin"]);
+  renderShell("user");
+
+  const wn = document.getElementById('welcomeName');
+  if(wn) wn.textContent = (Auth.user.name||'Operator').split(' ')[0];
+
+  (async () => {
+    await window.EcoCycle.ready;
+    const { transactions = [] } = await api("/transactions");
+
+    // Weekly collection: last 7 days kg
+    const days = {};
+    transactions.forEach(t => {
+      const d = (t.created_at||"").slice(0,10);
+      days[d] = (days[d]||0) + Number(t.weight||0);
+    });
+    const labels = Object.keys(days).sort().slice(-7);
+    const data   = labels.map(d => +days[d].toFixed(1));
+    if(labels.length) EcoCycle.Charts.area("#weeklyChart", { labels, data, label:"Kilograms" });
+    else document.getElementById("weeklyChart").innerHTML = '<p class="muted" style="text-align:center;padding:60px">No transactions yet — log your first pickup.</p>';
+
+    // Material mix donut
+    const mat = {};
+    transactions.forEach(t => mat[t.material||"Other"] = (mat[t.material||"Other"]||0) + Number(t.weight||0));
+    const matLabels = Object.keys(mat);
+    const matData = matLabels.map(k => +mat[k].toFixed(1));
+    if(matLabels.length) EcoCycle.Charts.donut("#materialDonut", { labels: matLabels, data: matData });
+    else document.getElementById("materialDonut").innerHTML = '<p class="muted" style="text-align:center;padding:60px">No material data yet.</p>';
+  })().catch(console.warn);
+</script>
+</body>
+</html>

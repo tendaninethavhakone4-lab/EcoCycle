@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Executive Hub · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Executive Hub</div><div class="page-sub">Live global system overview</div></div></div>
+    <div class="grid grid-4">
+      <div class="card kpi"><h3>Global Revenue</h3><div class="value" data-live="kpi.totalRevenue">R 0</div></div>
+      <div class="card kpi"><h3>Active Branches</h3><div class="value" id="ehBranches">0</div></div>
+      <div class="card kpi"><h3>Total Pickers</h3><div class="value" data-live="kpi.activePickers">0</div></div>
+      <div class="card kpi"><h3>CO₂ Saved</h3><div class="value" data-live="kpi.co2">0</div></div>
+    </div>
+    <div class="grid grid-2 mt-4">
+      <div class="section"><div class="section-title">Revenue Trend</div><canvas id="ehRev" height="240"></canvas></div>
+      <div class="section"><div class="section-title">Branches</div><div class="table-wrap"><table><thead><tr><th>Branch</th><th>Country</th><th>Manager</th><th>Pickers</th><th>Revenue</th><th>Status</th></tr></thead><tbody data-live-table="branches" data-limit="6"></tbody></table></div></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["superadmin"]);
+  renderShell("superadmin");
+  (async () => { await EcoCycle.ready;
+    try {
+      const [branches, txs] = await Promise.all([api("/branches"), api("/transactions")]);
+      document.getElementById("ehBranches").textContent = (branches.branches||branches||[]).length;
+      const list = txs.transactions||txs||[];
+      const byDay = {};
+      list.forEach(t => { const d=(t.created_at||"").slice(0,10); if(d) byDay[d] = (byDay[d]||0) + Number(t.amount||0); });
+      const labels = Object.keys(byDay).sort().slice(-14);
+      EcoCycle.Charts.area("ehRev", labels, labels.map(l=>byDay[l]||0), "Revenue (R)");
+    } catch(e){ console.warn(e); }
+  })();
+</script>
+</body>
+</html>

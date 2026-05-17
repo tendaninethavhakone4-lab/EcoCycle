@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Insights & Impact · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Insights & Impact</div><div class="page-sub">Your live environmental contribution</div></div></div>
+    <div class="grid grid-4">
+      <div class="card kpi"><h3>CO₂ Saved (kg)</h3><div class="value" data-live="kpi.co2">—</div></div>
+      <div class="card kpi"><h3>Trees Equivalent</h3><div class="value" data-live="kpi.trees">—</div></div>
+      <div class="card kpi"><h3>Landfill Diverted (kg)</h3><div class="value" data-live="kpi.landfill">—</div></div>
+      <div class="card kpi"><h3>Water Saved (L)</h3><div class="value" data-live="kpi.water">—</div></div>
+    </div>
+    <div class="grid grid-2 mt-4">
+      <div class="section"><div class="section-title">Impact by Material</div><div id="matChart" style="height:280px"></div></div>
+      <div class="section"><div class="section-title">Insights</div><ul style="list-style:none;padding:0;margin:0" data-live-list="insights"></ul></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["user","admin","superadmin"]);
+  renderShell("user");
+  (async () => {
+    await window.EcoCycle.ready;
+    const { transactions = [] } = await api("/transactions");
+    const m = {};
+    transactions.forEach(t => m[t.material||"Other"] = (m[t.material||"Other"]||0) + Number(t.weight||0));
+    const labels = Object.keys(m), data = labels.map(k => +m[k].toFixed(1));
+    if(labels.length) EcoCycle.Charts.bar("#matChart", { labels, data, label: "Kilograms" });
+    else document.getElementById("matChart").innerHTML = '<p class="muted" style="text-align:center;padding:60px">No data yet — log your first pickup.</p>';
+  })().catch(console.warn);
+</script>
+</body>
+</html>

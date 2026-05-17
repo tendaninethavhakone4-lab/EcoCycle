@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Help & Support · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Help & Support Center</div><div class="page-sub">Live tickets</div></div><button class="btn btn-primary" id="btnNewTicket">+ Submit Ticket</button></div>
+    <div class="section">
+      <div class="section-title">My Tickets</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>ID</th><th>User</th><th>Subject</th><th>Status</th><th>Created</th></tr></thead>
+        <tbody data-live-table="tickets"></tbody>
+      </table></div>
+    </div>
+    <div class="modal-backdrop" id="newTicket"><div class="modal"><h3>Submit Ticket</h3>
+      <div class="field"><label>Subject</label><input class="input" id="tkSub"/></div>
+      <div class="field"><label>Message</label><textarea rows="5" id="tkMsg" class="input"></textarea></div>
+      <div class="modal-actions"><button class="btn btn-secondary" data-modal-close="newTicket">Cancel</button><button class="btn btn-primary" id="tkSave">Submit</button></div>
+    </div></div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["user","admin","superadmin"]);
+  renderShell("user");
+  document.getElementById("btnNewTicket").onclick = () => document.getElementById("newTicket").classList.add("open");
+  document.getElementById("tkSave").onclick = async () => {
+    const subject = document.getElementById("tkSub").value.trim();
+    const message = document.getElementById("tkMsg").value.trim();
+    if(!subject || !message) return toast("Fill all fields","error");
+    try { await api("/support", { method:"POST", body:{ subject, message } }); toast("Ticket submitted"); document.getElementById("newTicket").classList.remove("open"); LiveData.refresh(); }
+    catch(e){ toast(e.message,"error"); }
+  };
+</script>
+</body>
+</html>

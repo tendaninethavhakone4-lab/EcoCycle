@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rankings · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">System Ranking</div><div class="page-sub">Live leaderboards</div></div></div>
+    <div class="grid grid-2">
+      <div class="section"><div class="section-title">Top Branches by Revenue</div>
+        <div class="table-wrap"><table><thead><tr><th>#</th><th>Branch</th><th>Country</th><th>Revenue</th></tr></thead><tbody id="rkBranches"><tr><td colspan="4" class="muted" style="text-align:center;padding:24px">Loading…</td></tr></tbody></table></div>
+      </div>
+      <div class="section"><div class="section-title">Top Pickers by Volume</div>
+        <div class="table-wrap"><table><thead><tr><th>#</th><th>Picker</th><th>Branch</th><th>Total kg</th></tr></thead><tbody id="rkPickers"><tr><td colspan="4" class="muted" style="text-align:center;padding:24px">Loading…</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["superadmin"]);
+  renderShell("superadmin");
+  (async () => {
+    try {
+      const [{ branches=[] }, { pickers=[] }] = await Promise.all([api("/branches"), api("/pickers")]);
+      const tb = document.getElementById("rkBranches");
+      const sortedB = [...branches].sort((a,b)=>Number(b.revenue||0)-Number(a.revenue||0));
+      tb.innerHTML = sortedB.length ? sortedB.map((b,i)=>`<tr><td>${i+1}</td><td>${b.name||""}</td><td>${b.country||""}</td><td>R ${Number(b.revenue||0).toFixed(2)}</td></tr>`).join("")
+        : '<tr><td colspan="4" class="muted" style="text-align:center;padding:24px">No branches yet.</td></tr>';
+      const tp = document.getElementById("rkPickers");
+      const sortedP = [...pickers].sort((a,b)=>Number(b.total_kg||0)-Number(a.total_kg||0));
+      tp.innerHTML = sortedP.length ? sortedP.map((p,i)=>`<tr><td>${i+1}</td><td>${p.name||""}</td><td>${p.branch||""}</td><td>${Number(p.total_kg||0).toFixed(1)} kg</td></tr>`).join("")
+        : '<tr><td colspan="4" class="muted" style="text-align:center;padding:24px">No pickers yet.</td></tr>';
+    } catch(e){ console.warn(e); }
+  })();
+</script>
+</body>
+</html>

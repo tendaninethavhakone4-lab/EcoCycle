@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>User Governance · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+<style>
+  .actions button{margin-right:6px;padding:6px 10px;font-size:12px;border-radius:8px;border:1px solid #E2E8F0;background:#fff;cursor:pointer;font-weight:600}
+  .actions button.approve{background:#ECFDF5;color:#059669;border-color:#A7F3D0}
+  .actions button.suspend{background:#FEF2F2;color:#B91C1C;border-color:#FECACA}
+  .actions button.delete{background:#F8FAFC;color:#475569}
+  .pill{padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .pill.active{background:#D1FAE5;color:#065F46}
+  .pill.pending{background:#FEF3C7;color:#92400E}
+  .pill.suspended{background:#FEE2E2;color:#991B1B}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">User Governance</div><div class="page-sub">Approve, suspend, and invite admins</div></div></div>
+
+    <div class="section">
+      <h3 style="margin:0 0 12px">Invite an Administrator</h3>
+      <p class="muted" style="margin:0 0 16px;font-size:13px">A temporary password will be emailed to them; they'll set their own on first login.</p>
+      <form id="inviteForm" class="grid" style="grid-template-columns:repeat(4,1fr);gap:12px;align-items:end">
+        <div class="field"><label>Full name</label><input class="input" id="iName" required/></div>
+        <div class="field"><label>Email</label><input class="input" type="email" id="iEmail" required/></div>
+        <div class="field"><label>Role</label>
+          <select class="input" id="iRole">
+            <option value="admin">Admin</option>
+            <option value="superadmin">SuperAdmin</option>
+          </select>
+        </div>
+        <div class="field"><label>Branch (optional)</label><input class="input" id="iBranch"/></div>
+        <div style="grid-column:1 / -1">
+          <button class="btn btn-primary" type="submit"><i data-lucide="user-plus"></i>Send Invite</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="section">
+      <h3 style="margin:0 0 12px">All system users</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Email</th><th>Name</th><th>Role</th><th>Branch</th><th>Status</th><th>Created</th><th>Actions</th></tr></thead>
+        <tbody id="ugBody"><tr><td colspan="7" class="muted" style="text-align:center;padding:24px">Loading…</td></tr></tbody>
+      </table></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["superadmin"]);
+  renderShell("superadmin");
+
+  async function load(){
+    const tb = document.getElementById("ugBody");
+    try {
+      const r = await api("/users");
+      const users = r.users || [];
+      if (!users.length) { tb.innerHTML = '<tr><td colspan="7" class="muted" style="text-align:center;padding:24px">No users yet.</td></tr>'; return; }
+      tb.innerHTML = users.map(u=>{
+        const status = (u.status||"active").toLowerCase();
+        const me = Auth.user.email === u.email;
+        return `<tr>
+          <td>${u.email||""}</td>
+          <td>${u.name||""}</td>
+          <td>${u.role||""}</td>
+          <td>${u.branch||""}</td>
+          <td><span class="pill ${status}">${status}</span></td>
+          <td class="muted">${(u.created_at||"").slice(0,10)}</td>
+          <td class="actions">
+            ${status === "pending" ? `<button class="approve" data-act="approve" data-id="${u.id}">Approve</button>` : ""}
+            ${status !== "suspended" && !me ? `<button class="suspend" data-act="suspend" data-id="${u.id}">Suspend</button>` : ""}
+            ${status === "suspended" ? `<button class="approve" data-act="approve" data-id="${u.id}">Reactivate</button>` : ""}
+            ${!me ? `<button class="delete" data-act="delete" data-id="${u.id}">Delete</button>` : `<span class="muted" style="font-size:11px">(you)</span>`}
+          </td></tr>`;
+      }).join("");
+    } catch (e) {
+      tb.innerHTML = `<tr><td colspan="7" class="muted" style="text-align:center;padding:24px">${e.message}</td></tr>`;
+    }
+  }
+
+  document.getElementById("ugBody").addEventListener("click", async (e) => {
+    const btn = e.target.closest("button[data-act]"); if (!btn) return;
+    const id = btn.dataset.id, act = btn.dataset.act;
+    btn.disabled = true;
+    try {
+      if (act === "approve")      await api(`/users/${id}/approve`, { method: "POST" });
+      else if (act === "suspend") await api(`/users/${id}/suspend`, { method: "POST" });
+      else if (act === "delete")  { if (!confirm("Permanently delete this user?")) { btn.disabled=false; return; } await api(`/users/${id}`, { method: "DELETE" }); }
+      toast("Done");
+      load();
+    } catch (err) { toast(err.message || "Action failed", "error"); btn.disabled = false; }
+  });
+
+  document.getElementById("inviteForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const body = {
+      name:   document.getElementById("iName").value.trim(),
+      email:  document.getElementById("iEmail").value.trim(),
+      role:   document.getElementById("iRole").value,
+      branch: document.getElementById("iBranch").value.trim() || null,
+    };
+    try {
+      const r = await api("/users", { method: "POST", body });
+      toast(r.email_sent ? "Invite sent — temp password emailed." : "User created. Email not sent (RESEND_API_KEY missing).");
+      e.target.reset();
+      load();
+    } catch (err) { toast(err.message || "Could not invite", "error"); }
+  });
+
+  load();
+</script>
+</body>
+</html>

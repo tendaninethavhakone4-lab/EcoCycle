@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Branch Governance · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+<style>
+  .actions button{padding:6px 10px;font-size:12px;border-radius:8px;border:1px solid #FECACA;background:#FEF2F2;color:#B91C1C;cursor:pointer;font-weight:600}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Branch Governance</div><div class="page-sub">Manage every operational branch</div></div></div>
+
+    <div class="section">
+      <h3 style="margin:0 0 12px">Add a Branch</h3>
+      <form id="bf" class="grid" style="grid-template-columns:repeat(4,1fr);gap:12px;align-items:end">
+        <div class="field"><label>Branch name *</label><input class="input" id="bName" required placeholder="e.g. Soweto Central"/></div>
+        <div class="field"><label>City</label><input class="input" id="bCity" placeholder="Johannesburg"/></div>
+        <div class="field"><label>Country</label><input class="input" id="bCountry" value="South Africa"/></div>
+        <div class="field"><label>Status</label>
+          <select class="input" id="bStatus">
+            <option value="active">Active</option>
+            <option value="pilot">Pilot</option>
+            <option value="paused">Paused</option>
+          </select>
+        </div>
+        <div class="field"><label>Manager name</label><input class="input" id="bManager"/></div>
+        <div class="field"><label>Manager email</label><input class="input" type="email" id="bMEmail"/></div>
+        <div class="field"><label>Latitude</label><input class="input" id="bLat" type="number" step="any" placeholder="-26.2041"/></div>
+        <div class="field"><label>Longitude</label><input class="input" id="bLng" type="number" step="any" placeholder="28.0473"/></div>
+        <div style="grid-column:1 / -1">
+          <button class="btn btn-primary" type="submit"><i data-lucide="plus"></i>Create Branch</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="section">
+      <h3 style="margin:0 0 12px">Branches</h3>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Branch</th><th>City</th><th>Country</th><th>Manager</th><th>Status</th><th>Created</th><th></th></tr></thead>
+        <tbody id="bBody"><tr><td colspan="7" class="muted" style="text-align:center;padding:24px">Loading…</td></tr></tbody>
+      </table></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["superadmin"]);
+  renderShell("superadmin");
+
+  async function load(){
+    const tb = document.getElementById("bBody");
+    try {
+      const r = await api("/branches");
+      const rows = r.branches || [];
+      tb.innerHTML = rows.length ? rows.map(b=>`<tr>
+        <td><strong>${b.name||""}</strong></td>
+        <td>${b.city||""}</td>
+        <td>${b.country||""}</td>
+        <td>${b.manager||""}${b.manager_email?`<div class="muted" style="font-size:11px">${b.manager_email}</div>`:""}</td>
+        <td>${b.status||""}</td>
+        <td class="muted">${(b.created_at||"").slice(0,10)}</td>
+        <td class="actions"><button data-id="${b.id}">Delete</button></td>
+      </tr>`).join("") : '<tr><td colspan="7" class="muted" style="text-align:center;padding:24px">No branches yet — add one above.</td></tr>';
+    } catch (e) {
+      tb.innerHTML = `<tr><td colspan="7" class="muted" style="text-align:center;padding:24px">${e.message}</td></tr>`;
+    }
+  }
+
+  document.getElementById("bf").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const body = {
+      name:    document.getElementById("bName").value.trim(),
+      city:    document.getElementById("bCity").value.trim() || null,
+      country: document.getElementById("bCountry").value.trim() || "South Africa",
+      status:  document.getElementById("bStatus").value,
+      manager: document.getElementById("bManager").value.trim() || null,
+      manager_email: document.getElementById("bMEmail").value.trim() || null,
+      lat: parseFloat(document.getElementById("bLat").value) || null,
+      lng: parseFloat(document.getElementById("bLng").value) || null,
+    };
+    try { await api("/branches", { method: "POST", body }); toast("Branch created"); e.target.reset(); document.getElementById("bCountry").value="South Africa"; load(); }
+    catch (err) { toast(err.message || "Could not create branch", "error"); }
+  });
+
+  document.getElementById("bBody").addEventListener("click", async (e) => {
+    const btn = e.target.closest("button[data-id]"); if (!btn) return;
+    if (!confirm("Delete this branch?")) return;
+    try { await api("/branches/" + btn.dataset.id, { method: "DELETE" }); toast("Deleted"); load(); }
+    catch (err) { toast(err.message || "Could not delete", "error"); }
+  });
+
+  load();
+</script>
+</body>
+</html>

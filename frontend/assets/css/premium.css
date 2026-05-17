@@ -1,0 +1,180 @@
+/* ============================================================
+   EcoCycle Premium CSS — Charts, Invoice, Receipt
+   ============================================================ */
+
+/* Chart card host */
+.chart-host { position: relative; width: 100%; min-height: 280px; }
+.chart-host canvas { width: 100% !important; }
+.chart-card {
+  background: #fff;
+  border: 1px solid var(--border, #E2E8F0);
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(2,6,23,0.04);
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+.chart-card:hover { box-shadow: 0 12px 40px rgba(16,185,129,0.10); transform: translateY(-2px); }
+.chart-card .chart-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 16px;
+}
+.chart-card .chart-title { font-size: 15px; font-weight: 800; color: var(--secondary, #064E3B); letter-spacing: -.01em; }
+.chart-card .chart-sub { font-size: 12px; color: #64748B; font-weight: 600; }
+.chart-card .chart-actions { display: flex; gap: 6px; }
+.chart-card .chart-pill {
+  padding: 4px 10px; border-radius: 999px; background: rgba(16,185,129,0.10);
+  color: var(--primary, #10B981); font-size: 11px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase;
+}
+
+/* Sparkline mini */
+.spark-host { width: 100%; height: 48px; }
+
+/* ============================================================
+   INVOICE & RECEIPT (shared "doc" base)
+   ============================================================ */
+.doc-page {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+  color: #0F172A;
+  background: #fff;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- Invoice ---------- */
+.invoice-doc {
+  width: 794px;            /* A4 width @ 96dpi */
+  min-height: 1123px;      /* A4 height */
+  padding: 56px 64px;
+  position: relative;
+  background:
+    radial-gradient(circle at top right, rgba(16,185,129,0.08), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(245,158,11,0.06), transparent 35%),
+    #ffffff;
+}
+.invoice-doc::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 6px;
+  background: linear-gradient(90deg, #10B981, #064E3B 60%, #F59E0B);
+}
+
+.doc-head {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;
+  margin-bottom: 40px;
+}
+.doc-brand .doc-logo { display: flex; gap: 12px; align-items: center; }
+.brand-name { font-size: 22px; font-weight: 800; color: #064E3B; letter-spacing: -.02em; }
+.brand-name span { color: #10B981; }
+.brand-tag { font-size: 11px; color: #64748B; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+
+.doc-meta { text-align: right; }
+.doc-title { font-size: 32px; font-weight: 800; color: #064E3B; letter-spacing: .04em; }
+.doc-num { font-size: 13px; font-weight: 700; color: #10B981; margin-top: 2px; }
+.doc-date { font-size: 12px; color: #64748B; font-weight: 600; margin-top: 4px; }
+
+.doc-parties {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px;
+  padding: 24px; background: #F8FAFC; border-radius: 16px; margin-bottom: 32px;
+}
+.doc-label { font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #94A3B8; margin-bottom: 8px; }
+.doc-name { font-size: 15px; font-weight: 800; color: #0F172A; margin-bottom: 4px; }
+.doc-line { font-size: 12px; color: #475569; line-height: 1.5; }
+.doc-status {
+  display: inline-block; padding: 6px 12px; border-radius: 999px; font-size: 11px; font-weight: 800;
+  letter-spacing: .06em; margin-bottom: 8px;
+}
+.doc-status.paid { background: rgba(16,185,129,0.12); color: #047857; }
+.doc-status.due  { background: rgba(245,158,11,0.15); color: #B45309; }
+.doc-status.overdue { background: rgba(239,68,68,0.12); color: #B91C1C; }
+
+.doc-table { width: 100%; border-collapse: collapse; margin-bottom: 28px; }
+.doc-table thead th {
+  text-align: left; font-size: 10px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  color: #94A3B8; padding: 12px 14px; border-bottom: 2px solid #E2E8F0; background: #fff;
+}
+.doc-table th.r, .doc-table td.r { text-align: right; }
+.doc-table tbody td {
+  padding: 16px 14px; font-size: 13px; color: #0F172A;
+  border-bottom: 1px solid #F1F5F9;
+}
+.doc-table .it-name { font-weight: 700; }
+.doc-table .it-note { font-size: 11px; color: #94A3B8; margin-top: 2px; }
+
+.doc-totals { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: flex-start; }
+.doc-notes p { margin: 0; font-size: 12px; color: #475569; line-height: 1.6; max-width: 360px; }
+.doc-sums { min-width: 260px; }
+.doc-sums > div {
+  display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; color: #475569; font-weight: 600;
+}
+.doc-sums > div.grand {
+  margin-top: 8px; padding: 16px 18px; border-radius: 12px;
+  background: linear-gradient(135deg, #064E3B, #10B981);
+  color: #fff; font-weight: 800; font-size: 16px; letter-spacing: .02em;
+}
+
+.doc-foot {
+  position: absolute; left: 64px; right: 64px; bottom: 32px;
+  display: flex; justify-content: space-between; font-size: 11px; color: #94A3B8; font-weight: 600;
+  padding-top: 16px; border-top: 1px solid #E2E8F0;
+}
+
+/* ---------- Receipt (thermal-style) ---------- */
+.receipt-doc {
+  width: 320px;
+  padding: 24px 22px 28px;
+  position: relative;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 12px, rgba(16,185,129,0.025) 12px 13px),
+    #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(2,6,23,0.10);
+}
+.rcp-strip { height: 4px; background: linear-gradient(90deg, #10B981, #064E3B 60%, #F59E0B); border-radius: 999px; margin-bottom: 16px; }
+.rcp-head { text-align: center; }
+.rcp-logo { display: inline-block; margin-bottom: 6px; }
+.rcp-title { font-size: 22px; font-weight: 800; color: #064E3B; letter-spacing: -.02em; }
+.rcp-sub { font-size: 11px; color: #64748B; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; margin-top: 2px; }
+.rcp-meta { font-size: 11px; color: #94A3B8; margin-top: 8px; font-weight: 600; }
+.rcp-id { display: inline-block; padding: 4px 10px; border-radius: 999px; background: rgba(16,185,129,0.10); color: #047857; font-weight: 800; font-size: 11px; letter-spacing: .06em; margin-top: 8px; }
+
+.rcp-block { margin: 16px 0; display: grid; gap: 6px; }
+.rcp-block > div { display: flex; justify-content: space-between; font-size: 12px; }
+.rcp-block span { color: #94A3B8; font-weight: 600; }
+.rcp-block strong { color: #0F172A; font-weight: 700; }
+
+.rcp-divider { border-top: 1.5px dashed #CBD5E1; margin: 14px 0; }
+
+.rcp-table { width: 100%; border-collapse: collapse; }
+.rcp-table td { padding: 6px 0; vertical-align: top; font-size: 12px; }
+.rcp-table small { color: #94A3B8; font-weight: 600; }
+.rcp-table .r { text-align: right; }
+
+.rcp-totals { display: grid; gap: 6px; }
+.rcp-totals > div { display: flex; justify-content: space-between; font-size: 12px; color: #475569; font-weight: 600; }
+.rcp-totals > div.grand {
+  margin-top: 6px; padding: 12px; border-radius: 10px;
+  background: linear-gradient(135deg, #064E3B, #10B981);
+  color: #fff; font-weight: 800; font-size: 15px;
+}
+
+.rcp-qr { text-align: center; margin: 18px 0 8px; }
+.rcp-qr canvas { display: inline-block; }
+.rcp-qr div { font-size: 10px; color: #94A3B8; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; margin-top: 6px; }
+
+.rcp-thanks { margin-top: 14px; text-align: center; font-size: 12px; color: #047857; font-weight: 700; line-height: 1.5; }
+.rcp-foot { margin-top: 8px; text-align: center; font-size: 10px; color: #94A3B8; font-weight: 600; }
+
+/* ---------- Print ---------- */
+@media print {
+  body * { visibility: hidden; }
+  .doc-page, .doc-page * { visibility: visible; }
+  .doc-page { position: absolute; left: 0; top: 0; box-shadow: none !important; }
+}
+
+/* ---------- Export bar shared by docs ---------- */
+.doc-actions {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  padding: 14px 16px; border-radius: 14px;
+  background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(6,78,59,0.06));
+  border: 1px solid rgba(16,185,129,0.15);
+  margin-bottom: 18px;
+}
+.doc-actions .btn { display: inline-flex; align-items: center; gap: 6px; }

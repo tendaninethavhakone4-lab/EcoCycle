@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Login · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+<div class="auth-shell">
+  <div class="auth-brand">
+    <div class="auth-brand-content animate-in">
+      <span class="badge"><i data-lucide="sparkles" style="width:14px;height:14px;margin-right:6px;vertical-align:-2px"></i>ECOSYSTEM v2.0</span>
+      <h1>EcoCycle.</h1>
+      <p>The global engine for circular economies. Digitizing waste recovery, empowering pickers, and scaling environmental impact.</p>
+      <div style="margin-top:48px; display:flex; gap:32px; flex-wrap:wrap">
+        <div><div style="font-size:32px;font-weight:800;color:#fff">12.4K+</div><div style="opacity:0.7;font-size:13px;font-weight:600">Pickers Onboarded</div></div>
+        <div><div style="font-size:32px;font-weight:800;color:#fff">8.4M kg</div><div style="opacity:0.7;font-size:13px;font-weight:600">Material Recovered</div></div>
+        <div><div style="font-size:32px;font-weight:800;color:#fff">2,100t</div><div style="opacity:0.7;font-size:13px;font-weight:600">CO₂ Diverted</div></div>
+      </div>
+    </div>
+    <div style="position:relative; z-index:2; opacity:.8; font-size:13px; font-weight:600">© 2026 EcoCycle — Scaling Sustainability.</div>
+  </div>
+  <div class="auth-form-wrap">
+    
+<form class="auth-card animate-in" onsubmit="return doLogin(event)">
+  <h2>The Future is Circular.</h2>
+  <p class="sub">Sign in to your EcoCycle command center.</p>
+  <div class="field"><label>Corporate Email</label><input class="input" type="email" id="email" required autocomplete="email" placeholder="you@yourcompany.co.za"/></div>
+  <div class="field"><label>Secure Password</label><input class="input" type="password" id="password" required autocomplete="current-password"/></div>
+  <div class="row mb-3">
+    <label><input type="checkbox" checked/> Remember me</label>
+    <span class="spacer"></span>
+    <a href="ForgotPassword.html">Forgot password?</a>
+  </div>
+  <button class="btn btn-primary btn-block" type="submit"><i data-lucide="log-in"></i>Sign in to EcoCycle</button>
+  <div class="center mt-3 muted">Don't have an account? <a href="Register.html">Create one</a></div>
+</form>
+  <script>
+  async function doLogin(e){
+    e.preventDefault();
+    const em = document.getElementById('email').value.trim();
+    const pw = document.getElementById('password').value;
+    try {
+      const res = await api('/auth/login',{method:'POST',body:{email:em,password:pw}});
+      Auth.user = res.user; Auth.token = res.token;
+      if (res.user && res.user.must_change_password) {
+        location.href = 'ChangePassword.html';
+        return false;
+      }
+      const role = res.user.role;
+      if(role==='admin') location.href = '../AdminScreens/AdminDashboardHub.html';
+      else if(role==='superadmin') location.href = '../SuperAdminScreens/SuperAdminExecutiveHub.html';
+      else location.href = '../UserScreens/Dashboard.html';
+    } catch(err) {
+      const msg = (err && err.message) ? err.message : 'Invalid credentials.';
+      toast(msg, 'error');
+    }
+    return false;
+  }
+  </script>
+
+  </div>
+</div>
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

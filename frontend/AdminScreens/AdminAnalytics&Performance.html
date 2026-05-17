@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Analytics · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header">
+      <div><div class="page-title">Analytics & Performance</div><div class="page-sub">Branch KPIs and trends · live data</div></div>
+      <button class="btn btn-secondary" id="btnCsv"><i data-lucide="file-down"></i> Export CSV</button>
+    </div>
+
+    <div class="grid grid-4">
+      <div class="card kpi"><h3>Total Revenue</h3><div class="value" data-live="kpi.totalRevenue">R 0</div></div>
+      <div class="card kpi"><h3>Transactions</h3><div class="value" data-live="kpi.txCount">0</div></div>
+      <div class="card kpi"><h3>Active Pickers</h3><div class="value" data-live="kpi.activePickers">0</div></div>
+      <div class="card kpi"><h3>Total Volume</h3><div class="value" data-live="kpi.totalKg">0</div></div>
+    </div>
+
+    <div class="grid grid-2 mt-4">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div><div class="chart-title">Volume Trend</div><div class="chart-sub">Weight collected per day (kg)</div></div>
+          <span class="chart-pill">Last 14d</span>
+        </div>
+        <div id="chartVolume" style="height:300px"></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-head">
+          <div><div class="chart-title">Material Mix</div><div class="chart-sub">Share of total volume</div></div>
+          <span class="chart-pill">All time</span>
+        </div>
+        <div id="chartMix" style="height:300px"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-2 mt-4">
+      <div class="chart-card">
+        <div class="chart-head">
+          <div><div class="chart-title">Revenue vs Payouts</div><div class="chart-sub">Bar = revenue · line = payouts</div></div>
+          <span class="chart-pill">Monthly</span>
+        </div>
+        <div id="chartMixed" style="height:320px"></div>
+      </div>
+      <div class="section">
+        <div class="section-title">Picker Leaderboard</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>#</th><th>Picker</th><th>Tx</th><th class="r">Revenue</th></tr></thead>
+            <tbody id="lbRows"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+<script>
+let TX = [];
+async function load() {
+  try {
+    const r = await api("/transactions");
+    TX = (r.transactions || r || []).map(t => ({
+      id: t.id, date: (t.created_at || t.date || "").slice(0, 10),
+      picker: t.picker_name || t.picker || "—",
+      material: t.material, weight: Number(t.weight_kg || 0), amount: Number(t.amount || 0),
+    }));
+  } catch { TX = []; }
+  await window.EcoCycle.ready;
+  renderCharts();
+  renderLeaderboard();
+}
+function groupBy(arr, key) {
+  return arr.reduce((m, x) => ((m[x[key]] = (m[x[key]] || 0) + (x.weight || 1)), m), {});
+}
+function renderCharts() {
+  // Volume — last 14 days from actual TX
+  const days = [...Array(14)].map((_, i) => {
+    const d = new Date(); d.setDate(d.getDate() - (13 - i));
+    return d.toISOString().slice(0, 10);
+  });
+  const byDay = TX.reduce((m, t) => ((m[t.date] = (m[t.date] || 0) + t.weight), m), {});
+  const data = days.map(d => Math.round(byDay[d] || 0));
+  EcoCycle.Charts.area("#chartVolume", { labels: days.map(d => d.slice(5)), data, label: "kg" });
+
+  const mix = groupBy(TX, "material");
+  if (Object.keys(mix).length) {
+    EcoCycle.Charts.donut("#chartMix", {
+      labels: Object.keys(mix), data: Object.values(mix),
+      centerText: { value: Object.values(mix).reduce((a,b)=>a+b,0).toLocaleString() + " kg", label: "Total" },
+    });
+  } else {
+    document.getElementById("chartMix").innerHTML = '<p class="muted" style="text-align:center;padding:40px">No material data yet</p>';
+  }
+
+  // Revenue per month from TX
+  const byMonth = {};
+  TX.forEach(t => { const m = (t.date||"").slice(0,7); if(m){ byMonth[m] = (byMonth[m]||0) + (t.amount||0); }});
+  const months = Object.keys(byMonth).sort().slice(-6);
+  if (months.length) {
+    EcoCycle.Charts.mixed("#chartMixed", {
+      labels: months,
+      bar: { label: "Revenue (R)", data: months.map(m=>byMonth[m]||0), color: EcoCycle.palette.primary },
+      line: { label: "Avg/Day",   data: months.map(m=>(byMonth[m]||0)/30),  color: EcoCycle.palette.accent },
+    });
+  } else {
+    document.getElementById("chartMixed").innerHTML = '<p class="muted" style="text-align:center;padding:40px">No revenue data yet</p>';
+  }
+}
+function renderLeaderboard() {
+  const agg = {};
+  TX.forEach(t => {
+    if (!agg[t.picker]) agg[t.picker] = { tx: 0, rev: 0 };
+    agg[t.picker].tx++; agg[t.picker].rev += t.amount;
+  });
+  const list = Object.entries(agg).map(([p, v]) => ({ picker: p, ...v })).sort((a,b)=>b.rev-a.rev).slice(0, 8);
+  const tb = document.getElementById("lbRows");
+  tb.innerHTML = list.length
+    ? list.map((d, i) => `<tr><td><strong>${i+1}</strong></td><td>${d.picker}</td><td>${d.tx}</td><td class="r"><strong>R ${d.rev.toFixed(2)}</strong></td></tr>`).join("")
+    : '<tr><td colspan="4" class="muted" style="text-align:center;padding:24px">No leaderboard data yet.</td></tr>';
+}
+document.addEventListener("click", async e => {
+  if (e.target.closest("#btnCsv")) {
+    await window.EcoCycle.ready;
+    EcoCycle.CSV.download(TX, `analytics-${new Date().toISOString().slice(0,10)}.csv`);
+    toast("CSV exported");
+  }
+});
+load();
+</script>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["admin","superadmin"]);
+  renderShell("admin");
+</script>
+</body>
+</html>

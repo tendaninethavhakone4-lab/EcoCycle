@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Smart Insights · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Smart Insights Hub</div><div class="page-sub">Live insights derived from your real data</div></div></div>
+    <div class="section"><div class="section-title">Insights</div><ul style="list-style:none;padding:0;margin:0" data-live-list="insights"></ul></div>
+    <div class="grid grid-2 mt-4">
+      <div class="section"><div class="section-title">Forecast (next 7 days)</div><div id="fcChart" style="height:260px"></div></div>
+      <div class="section"><div class="section-title">Recommendations</div><ul id="recList" style="list-style:none;padding:0;margin:0"></ul></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["admin","superadmin"]);
+  renderShell("admin");
+  (async () => {
+    await window.EcoCycle.ready;
+    const r = await api("/insights");
+    if(r.forecast && r.forecast.labels){
+      EcoCycle.Charts.area("#fcChart", { labels: r.forecast.labels, data: r.forecast.data, label: "Predicted kg" });
+    } else {
+      document.getElementById("fcChart").innerHTML = '<p class="muted" style="text-align:center;padding:40px">Not enough data for a forecast yet.</p>';
+    }
+    const rec = (r.recommendations || []).map(x => `<li class="insight-item"><strong>${x.title||""}</strong> · ${x.detail||""}</li>`).join("") || '<li class="muted">No recommendations yet.</li>';
+    document.getElementById("recList").innerHTML = rec;
+  })().catch(console.warn);
+</script>
+</body>
+</html>

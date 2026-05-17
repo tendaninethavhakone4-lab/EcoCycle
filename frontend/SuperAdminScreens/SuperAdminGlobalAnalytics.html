@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Global Analytics · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Global Analytics</div><div class="page-sub">Live multi-branch comparison</div></div></div>
+    <div class="grid grid-4">
+      <div class="card kpi"><h3>Global Volume</h3><div class="value" data-live="kpi.totalKg">0</div></div>
+      <div class="card kpi"><h3>Global Revenue</h3><div class="value" data-live="kpi.totalRevenue">R 0</div></div>
+      <div class="card kpi"><h3>Total Transactions</h3><div class="value" data-live="kpi.txCount">0</div></div>
+      <div class="card kpi"><h3>Active Pickers</h3><div class="value" data-live="kpi.activePickers">0</div></div>
+    </div>
+    <div class="grid grid-2 mt-4">
+      <div class="section"><div class="section-title">Daily Revenue (R)</div><canvas id="gaRev" height="240"></canvas></div>
+      <div class="section"><div class="section-title">Volume by Material (kg)</div><canvas id="gaMat" height="240"></canvas></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["superadmin"]);
+  renderShell("superadmin");
+  (async () => { await EcoCycle.ready;
+    try {
+      const [txs, impact] = await Promise.all([api("/transactions"), api("/impact")]);
+      const list = txs.transactions||txs||[];
+      const byDay = {};
+      list.forEach(t => { const d=(t.created_at||"").slice(0,10); if(d) byDay[d] = (byDay[d]||0) + Number(t.amount||0); });
+      const labels = Object.keys(byDay).sort().slice(-14);
+      EcoCycle.Charts.area("gaRev", labels, labels.map(l=>byDay[l]||0), "Revenue (R)");
+      const mats = impact.byMaterial || impact.materials || [];
+      EcoCycle.Charts.bar("gaMat", mats.map(m=>m.material||m.name||""), mats.map(m=>Number(m.kg||m.weight||0)), "kg");
+    } catch(e){ console.warn(e); }
+  })();
+</script>
+</body>
+</html>

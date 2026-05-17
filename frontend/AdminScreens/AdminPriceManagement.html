@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Price Management · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Price Management</div><div class="page-sub">Live material rates · ZAR per kg</div></div><button class="btn btn-primary" id="btnAddPrice">Update Price</button></div>
+    <div class="section">
+      <div class="table-wrap"><table>
+        <thead><tr><th>Material</th><th>Current Price (R/kg)</th><th>Last Updated</th></tr></thead>
+        <tbody data-live-table="prices"></tbody>
+      </table></div>
+    </div>
+    <div class="modal-backdrop" id="updPrice"><div class="modal"><h3>Update Price</h3>
+      <div class="field"><label>Material</label><input class="input" id="pmMat" placeholder="e.g. Plastic"/></div>
+      <div class="field"><label>New price (R/kg)</label><input class="input" id="pmVal" type="number" step="0.01"/></div>
+      <div class="modal-actions"><button class="btn btn-secondary" data-modal-close="updPrice">Cancel</button><button class="btn btn-primary" id="pmSave">Save</button></div>
+    </div></div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["admin","superadmin"]);
+  renderShell("admin");
+  document.getElementById("btnAddPrice").onclick = () => document.getElementById("updPrice").classList.add("open");
+  document.getElementById("pmSave").onclick = async () => {
+    const material = document.getElementById("pmMat").value.trim();
+    const price_per_kg = parseFloat(document.getElementById("pmVal").value);
+    if(!material || isNaN(price_per_kg)) return toast("Enter material and price","error");
+    try {
+      await api("/prices", { method:"PUT", body: { material, price_per_kg } });
+      toast("Price updated");
+      document.getElementById("updPrice").classList.remove("open");
+      LiveData.refresh();
+    } catch(e){ toast(e.message,"error"); }
+  };
+</script>
+</body>
+</html>

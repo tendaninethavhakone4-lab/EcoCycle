@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Settings · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Settings & Status</div><div class="page-sub">Live account preferences</div></div></div>
+    <div class="section">
+      <h3>Profile</h3>
+      <div class="grid grid-2 mt-3">
+        <div class="field"><label>Name</label><input class="input" id="stName"/></div>
+        <div class="field"><label>Email</label><input class="input" id="stEmail" disabled/></div>
+        <div class="field"><label>Phone</label><input class="input" id="stPhone"/></div>
+        <div class="field"><label>Currency</label><input class="input" value="ZAR (R) — South African Rand" disabled/></div>
+      </div>
+      <button class="btn btn-primary mt-3" id="stSave">Save Profile</button>
+    </div>
+    <div class="section mt-4"><div class="section-title">System Status</div>
+      <div class="grid grid-3" id="statusGrid"><p class="muted">Checking…</p></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["user","admin","superadmin"]);
+  renderShell("user");
+  document.getElementById("stName").value  = Auth.user.name  || "";
+  document.getElementById("stEmail").value = Auth.user.email || "";
+  document.getElementById("stPhone").value = Auth.user.phone || "";
+  document.getElementById("stSave").onclick = async () => {
+    try {
+      await api("/settings", { method:"PUT", body:{ name: document.getElementById("stName").value, phone: document.getElementById("stPhone").value }});
+      const u = { ...Auth.user, name: document.getElementById("stName").value, phone: document.getElementById("stPhone").value };
+      localStorage.setItem("riq_user", JSON.stringify(u)); Auth.user = u;
+      toast("Profile saved");
+    } catch(e){ toast(e.message,"error"); }
+  };
+  (async () => {
+    let api_ok = false, db_ok = false;
+    try { await api("/analytics"); api_ok = true; db_ok = true; } catch {}
+    document.getElementById("statusGrid").innerHTML = `
+      <div class="card"><h3>API</h3><div class="status ${api_ok?"active":"inactive"}">${api_ok?"Operational":"Offline"}</div></div>
+      <div class="card"><h3>Database</h3><div class="status ${db_ok?"active":"inactive"}">${db_ok?"Operational":"Unknown"}</div></div>
+      <div class="card"><h3>Currency</h3><div class="status active">ZAR Locked</div></div>`;
+  })();
+</script>
+</body>
+</html>

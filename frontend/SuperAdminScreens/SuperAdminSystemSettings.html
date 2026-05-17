@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>System Settings · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">System Settings</div><div class="page-sub">Live global configuration</div></div></div>
+    <div class="section">
+      <h3>General</h3>
+      <div class="grid grid-2 mt-3">
+        <div class="field"><label>Platform name</label><input class="input" id="ssName"/></div>
+        <div class="field"><label>Default currency</label><input class="input" value="ZAR (R)" disabled/></div>
+        <div class="field"><label>Support email</label><input class="input" id="ssEmail"/></div>
+        <div class="field"><label>Default branch</label><input class="input" id="ssBranch"/></div>
+      </div>
+      <button class="btn btn-primary mt-3" id="ssSave">Save</button>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["superadmin"]);
+  renderShell("superadmin");
+  (async () => {
+    try { const s = await api("/settings");
+      document.getElementById("ssName").value   = s.platform_name || s.name || "EcoCycle";
+      document.getElementById("ssEmail").value  = s.support_email || "";
+      document.getElementById("ssBranch").value = s.default_branch || "";
+    } catch(e){ console.warn(e); }
+  })();
+  document.getElementById("ssSave").onclick = async () => {
+    try { await api("/settings",{ method:"PUT", body:{
+      platform_name: document.getElementById("ssName").value,
+      support_email: document.getElementById("ssEmail").value,
+      default_branch: document.getElementById("ssBranch").value,
+      currency: "ZAR"
+    }}); toast("Saved"); } catch(e){ toast(e.message,"error"); }
+  };
+</script>
+</body>
+</html>

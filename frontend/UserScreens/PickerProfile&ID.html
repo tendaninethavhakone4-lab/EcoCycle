@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Picker Profile · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="breadcrumbs"><a href="WastePickerManagement.html">Pickers</a><span>›</span> Profile</div>
+    <div class="page-header">
+      <div><div class="page-title" id="pkName">Loading…</div><div class="page-sub" id="pkSub">—</div></div>
+      <div class="row">
+        <button class="btn btn-secondary" id="btnPrint">Print ID</button>
+        <a href="#" id="btnStartTx" class="btn btn-primary">Start Transaction</a>
+      </div>
+    </div>
+    <div class="grid grid-3">
+      <div class="card center">
+        <canvas id="pkQR" width="200" height="200" style="background:#fff;border-radius:8px"></canvas>
+        <div class="mt-3"><strong id="pkId">—</strong></div>
+        <div class="muted">Scan to identify</div>
+      </div>
+      <div class="card" style="grid-column:span 2">
+        <h3>Profile</h3>
+        <div class="grid grid-2 mt-3" style="gap:10px;font-size:13px" id="pkProfile">
+          <div class="muted">Loading profile…</div>
+        </div>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-title">Recent Transactions</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>ID</th><th>Material</th><th>Weight</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody id="pkTx"><tr><td colspan="6" class="muted" style="text-align:center;padding:24px">Loading…</td></tr></tbody>
+      </table></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["user","admin","superadmin"]);
+  renderShell("user");
+  (async () => {
+    const id = new URLSearchParams(location.search).get("id") || new URLSearchParams(location.search).get("picker");
+    if(!id){ document.getElementById("pkName").textContent = "No picker selected"; return; }
+    try {
+      const { picker, transactions = [] } = await api("/pickers/" + encodeURIComponent(id));
+      const p = picker || {};
+      document.getElementById("pkName").textContent = p.name || id;
+      document.getElementById("pkSub").textContent  = `Picker ID: ${p.id||id} · ${p.branch||"—"}`;
+      document.getElementById("pkId").textContent   = p.id || id;
+      document.getElementById("btnStartTx").href    = `TransactionFlow(Wizard).html?picker=${encodeURIComponent(p.id||id)}`;
+      document.getElementById("pkProfile").innerHTML = `
+        <div><strong>Phone:</strong><br/>${p.phone||"—"}</div>
+        <div><strong>Branch:</strong><br/>${p.branch||"—"}</div>
+        <div><strong>Status:</strong><br/><span class="status ${(p.status||'active').toLowerCase()}">${p.status||"Active"}</span></div>
+        <div><strong>Total Collected:</strong><br/>${p.total_kg||0} kg</div>
+        <div><strong>Total Earned:</strong><br/>R ${Number(p.total_earned||0).toFixed(2)}</div>
+        <div><strong>Joined:</strong><br/>${(p.created_at||"").slice(0,10)||"—"}</div>`;
+      const tb = document.getElementById("pkTx");
+      tb.innerHTML = transactions.length ? transactions.map(t => `<tr>
+        <td><strong>${t.id}</strong></td><td>${t.material||"—"}</td><td>${t.weight||0} kg</td>
+        <td>R ${Number(t.amount||0).toFixed(2)}</td>
+        <td><span class="status ${(t.status||"").toLowerCase()}">${t.status||"—"}</span></td>
+        <td class="muted">${(t.created_at||"").slice(0,10)}</td></tr>`).join("")
+        : `<tr><td colspan="6" class="muted" style="text-align:center;padding:24px">No transactions yet.</td></tr>`;
+      // QR code
+      await window.EcoCycle.ready;
+      if(window.QRCode) QRCode.toCanvas(document.getElementById("pkQR"), p.id||id, { width:200, margin:1, color:{ dark:"#064E3B", light:"#FFFFFF" } });
+    } catch(e){
+      document.getElementById("pkName").textContent = "Picker not found";
+      document.getElementById("pkSub").textContent  = e.message;
+    }
+  })();
+  document.getElementById("btnPrint").onclick = () => window.print();
+</script>
+</body>
+</html>

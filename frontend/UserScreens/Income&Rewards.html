@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Income & Rewards · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Income & Rewards</div><div class="page-sub">Live picker payouts in ZAR</div></div></div>
+    <div class="grid grid-4">
+      <div class="card kpi"><h3>Total Paid</h3><div class="value" data-live="kpi.totalPaid">—</div></div>
+      <div class="card kpi"><h3>Pending Payouts</h3><div class="value" data-live="kpi.pendingPayouts">—</div></div>
+      <div class="card kpi"><h3>Active Pickers</h3><div class="value" data-live="kpi.activePickers">—</div></div>
+      <div class="card kpi"><h3>Total Revenue</h3><div class="value" data-live="kpi.totalRevenue">—</div></div>
+    </div>
+    <div class="section">
+      <div class="section-title">Earnings Over Time</div>
+      <div id="earnChart" style="height:240px"></div>
+    </div>
+    <div class="section">
+      <div class="section-title">Payout History</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>ID</th><th>Picker</th><th>Amount</th><th>Method</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody data-live-table="payouts"></tbody>
+      </table></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["user","admin","superadmin"]);
+  renderShell("user");
+  (async () => {
+    await window.EcoCycle.ready;
+    const { payouts = [] } = await api("/payouts");
+    const days = {};
+    payouts.forEach(p => { const d = (p.created_at||"").slice(0,10); days[d] = (days[d]||0) + Number(p.amount||0); });
+    const labels = Object.keys(days).sort().slice(-14);
+    const data = labels.map(d => +days[d].toFixed(2));
+    if(labels.length) EcoCycle.Charts.area("#earnChart", { labels, data, label:"Paid (R)" });
+    else document.getElementById("earnChart").innerHTML = '<p class="muted" style="text-align:center;padding:60px">No payouts yet.</p>';
+  })().catch(console.warn);
+</script>
+</body>
+</html>

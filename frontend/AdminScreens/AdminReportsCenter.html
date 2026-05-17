@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Reports · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Reports Center</div><div class="page-sub">Generate live reports from real data</div></div></div>
+    <div class="grid grid-3">
+      <div class="card"><h3>Transactions</h3><p class="mt-2 muted">Full transaction ledger</p><div class="mt-3"><button class="btn btn-secondary btn-sm" data-r="transactions" data-fmt="csv">CSV</button> <button class="btn btn-primary btn-sm" data-r="transactions" data-fmt="pdf">PDF</button></div></div>
+      <div class="card"><h3>Sales</h3><p class="mt-2 muted">Marketplace sales</p><div class="mt-3"><button class="btn btn-secondary btn-sm" data-r="sales" data-fmt="csv">CSV</button> <button class="btn btn-primary btn-sm" data-r="sales" data-fmt="pdf">PDF</button></div></div>
+      <div class="card"><h3>Payouts</h3><p class="mt-2 muted">All picker payouts</p><div class="mt-3"><button class="btn btn-secondary btn-sm" data-r="payouts" data-fmt="csv">CSV</button> <button class="btn btn-primary btn-sm" data-r="payouts" data-fmt="pdf">PDF</button></div></div>
+      <div class="card"><h3>Inventory</h3><p class="mt-2 muted">Material stock</p><div class="mt-3"><button class="btn btn-secondary btn-sm" data-r="inventory" data-fmt="csv">CSV</button> <button class="btn btn-primary btn-sm" data-r="inventory" data-fmt="pdf">PDF</button></div></div>
+      <div class="card"><h3>Summary</h3><p class="mt-2 muted">KPI snapshot</p><div class="mt-3"><button class="btn btn-secondary btn-sm" data-r="summary" data-fmt="csv">CSV</button> <button class="btn btn-primary btn-sm" data-r="summary" data-fmt="pdf">PDF</button></div></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["admin","superadmin"]);
+  renderShell("admin");
+  document.querySelectorAll("[data-r]").forEach(btn => btn.addEventListener("click", async () => {
+    const type = btn.dataset.r, fmt = btn.dataset.fmt;
+    try {
+      const r = await api("/reports/" + type);
+      const rows = r.rows || [];
+      if(fmt === "csv"){
+        await window.EcoCycle.ready;
+        EcoCycle.CSV.download(rows, type + "-" + new Date().toISOString().slice(0,10) + ".csv");
+      } else {
+        await window.EcoCycle.ready;
+        EcoCycle.Invoice.fromRows(rows, { title: type + " report" });
+      }
+      toast("Generated");
+    } catch(e){ toast(e.message,"error"); }
+  }));
+</script>
+</body>
+</html>

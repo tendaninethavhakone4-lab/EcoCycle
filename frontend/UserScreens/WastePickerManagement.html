@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Waste Pickers · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header">
+      <div><div class="page-title">Waste Picker Management</div><div class="page-sub">Onboard, track and manage informal pickers</div></div>
+      <button class="btn btn-primary" data-modal-open="addPicker">+ Add Picker</button>
+    </div>
+    <div class="section">
+      <div class="row mb-3">
+        <input class="input" placeholder="Search pickers…" style="max-width:280px"/>
+        <select style="max-width:160px"><option>All status</option><option>Active</option><option>Inactive</option></select>
+        <select style="max-width:160px"><option>All branches</option><option>Lagos</option><option>Abuja</option></select>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Branch</th><th>Total Collected</th><th>Status</th><th>Actions</th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table></div>
+    </div>
+
+    <div class="modal-backdrop" id="addPicker">
+      <div class="modal">
+        <h3>Add Picker</h3>
+        <div class="field"><label>Name</label><input class="input" id="pName"/></div>
+        <div class="field"><label>Phone</label><input class="input" id="pPhone"/></div>
+        <div class="field"><label>Branch</label><input class="input" id="pBranch"/></div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" data-modal-close="addPicker">Cancel</button>
+          <button class="btn btn-primary" onclick="savePicker()">Save</button>
+        </div>
+      </div>
+    </div>
+
+<script>
+async function load(){
+  const tbody = document.getElementById("rows");
+  try {
+    const {pickers = []} = await api("/pickers");
+    tbody.innerHTML = pickers.length ? pickers.map(p=>row(p)).join("") : `<tr><td colspan="7" class="muted" style="text-align:center;padding:24px">No pickers yet — add your first picker.</td></tr>`;
+  } catch (e) {
+    tbody.innerHTML = `<tr><td colspan="7" class="muted" style="text-align:center;padding:24px">${e.message}</td></tr>`;
+  }
+}
+function row(p){return `<tr><td><strong>${p.id}</strong></td><td>${p.name}</td><td>${p.phone||"-"}</td><td>${p.branch||"-"}</td><td>${p.total_kg||0} kg</td><td><span class="status ${(p.status||'active').toLowerCase()}">${p.status||"Active"}</span></td><td><a href="PickerProfile&ID.html?id=${p.id}" class="btn btn-secondary btn-sm">View</a></td></tr>`}
+async function savePicker(){
+  try{
+    await api("/pickers",{method:"POST",body:{name:pName.value,phone:pPhone.value,branch:pBranch.value}});
+    toast("Picker added");
+    document.getElementById("addPicker").classList.remove("open");
+    load();
+  }catch(e){ toast(e.message,"error"); }
+}
+load();
+</script>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["user","admin","superadmin"]);
+  renderShell("user");
+</script>
+</body>
+</html>

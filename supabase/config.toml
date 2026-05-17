@@ -1,0 +1,5 @@
+# Project config for the Supabase CLI.
+project_id = "jbechqsutdzwrihpovee"
+
+[functions.send-email]
+verify_jwt = true

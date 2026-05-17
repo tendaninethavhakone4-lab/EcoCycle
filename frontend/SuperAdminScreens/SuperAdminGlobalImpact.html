@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Global Impact · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Global Impact</div><div class="page-sub">Live worldwide sustainability metrics</div></div></div>
+    <div class="grid grid-4">
+      <div class="card kpi"><h3>CO₂ Saved</h3><div class="value" data-live="kpi.co2">0</div></div>
+      <div class="card kpi"><h3>Trees Equiv.</h3><div class="value" data-live="kpi.trees">0</div></div>
+      <div class="card kpi"><h3>Landfill Diverted</h3><div class="value" data-live="kpi.landfill">0</div></div>
+      <div class="card kpi"><h3>Water Saved</h3><div class="value" data-live="kpi.water">0</div></div>
+    </div>
+    <div class="section"><div class="section-title">Volume by Material (kg)</div><canvas id="giChart" height="280"></canvas></div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["superadmin"]);
+  renderShell("superadmin");
+  (async () => { await EcoCycle.ready;
+    try { const impact = await api("/impact"); const mats = impact.byMaterial || impact.materials || [];
+      EcoCycle.Charts.bar("giChart", mats.map(m=>m.material||m.name||""), mats.map(m=>Number(m.kg||m.weight||0)), "kg");
+    } catch(e){ console.warn(e); }
+  })();
+</script>
+</body>
+</html>

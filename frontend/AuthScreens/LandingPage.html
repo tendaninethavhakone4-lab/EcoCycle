@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>EcoCycle — The Operating System for Circular Economies</title>
+<meta name="description" content="EcoCycle digitizes informal waste recovery. Instant payouts, verified logistics, and ESG-grade impact analytics — at planetary scale." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/css/styles.css" />
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body{background:#fff}
+  .nav{display:flex;justify-content:space-between;align-items:center;padding:20px 64px;background:rgba(255,255,255,0.85);backdrop-filter:blur(16px);position:sticky;top:0;z-index:1000;border-bottom:1px solid rgba(15,23,42,0.06)}
+  .nav .logo{font-size:22px;font-weight:800;color:var(--secondary);letter-spacing:-0.03em}
+  .nav .logo span{color:var(--primary)}
+  .nav .links{display:flex;align-items:center;gap:32px}
+  .nav .links a:not(.btn){color:var(--secondary);font-weight:600;font-size:14px;transition:color .2s}
+  .nav .links a:not(.btn):hover{color:var(--primary)}
+  .nav .btn{height:40px;padding:0 18px;font-size:14px}
+
+  .hero{position:relative;padding:80px 64px 120px;overflow:hidden;background:radial-gradient(circle at 15% 30%,rgba(16,185,129,0.12),transparent 50%),radial-gradient(circle at 85% 60%,rgba(245,158,11,0.10),transparent 50%),linear-gradient(180deg,#F8FAFC 0%,#fff 100%)}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:64px;align-items:center;max-width:1280px;margin:0 auto}
+  .hero-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.2);border-radius:999px;font-size:13px;font-weight:700;color:#047857;margin-bottom:24px}
+  .hero-pill .live{width:8px;height:8px;border-radius:50%;background:var(--primary);position:relative}
+  .hero-pill .live::after{content:"";position:absolute;inset:-4px;border-radius:50%;background:var(--primary);opacity:0.4;animation:ping 1.6s cubic-bezier(0,0,0.2,1) infinite}
+  @keyframes ping{0%{transform:scale(1);opacity:0.4}100%{transform:scale(2.4);opacity:0}}
+  .hero h1{font-size:clamp(40px,6vw,76px);font-weight:800;line-height:1.05;letter-spacing:-0.04em;color:var(--secondary);margin-bottom:24px}
+  .hero h1 .grad{background:linear-gradient(120deg,#10B981 0%,#047857 50%,#064E3B 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.lead{font-size:19px;color:var(--muted);line-height:1.65;margin-bottom:36px;max-width:540px}
+  .hero .cta-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+  .hero .btn{height:54px;padding:0 28px;font-size:15px}
+  .hero .meta{display:flex;gap:32px;margin-top:48px;flex-wrap:wrap}
+  .hero .meta .v{font-size:24px;font-weight:800;color:var(--secondary);letter-spacing:-0.02em}
+  .hero .meta .l{font-size:13px;color:var(--muted);font-weight:600;margin-top:2px}
+
+  .hero-visual{position:relative;perspective:1500px}
+  .mock{background:#fff;border-radius:20px;padding:24px;border:1px solid var(--border);box-shadow:0 30px 80px -20px rgba(6,78,59,0.25),0 10px 25px -10px rgba(0,0,0,0.1);transform:rotateY(-6deg) rotateX(4deg);transform-style:preserve-3d;animation:float 6s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:rotateY(-6deg) rotateX(4deg) translateY(0)}50%{transform:rotateY(-6deg) rotateX(4deg) translateY(-12px)}}
+  .mock-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+  .mock-head .dots{display:flex;gap:6px}
+  .mock-head .dots span{width:10px;height:10px;border-radius:50%;background:#E2E8F0}
+  .mock-head .dots span:first-child{background:#EF4444}
+  .mock-head .dots span:nth-child(2){background:#F59E0B}
+  .mock-head .dots span:nth-child(3){background:#10B981}
+  .mock-head .url{font-size:11px;color:var(--muted);background:#F1F5F9;padding:4px 10px;border-radius:6px;font-family:ui-monospace,monospace}
+  .mock-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+  .mock-kpi{padding:14px;background:#F8FAFC;border-radius:12px;border:1px solid var(--border)}
+  .mock-kpi .l{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:6px}
+  .mock-kpi .v{font-size:20px;font-weight:800;color:var(--secondary);letter-spacing:-0.02em}
+  .mock-kpi .d{font-size:11px;color:var(--primary);font-weight:700;margin-top:2px}
+  .mock-chart{height:140px;background:linear-gradient(180deg,rgba(16,185,129,0.12),transparent);border-radius:12px;position:relative;padding:12px;display:flex;align-items:flex-end;gap:6px}
+  .mock-chart .b{flex:1;background:linear-gradient(180deg,#10B981,#047857);border-radius:4px 4px 0 0;opacity:0.85}
+  .floating-badge{position:absolute;background:#fff;padding:14px 18px;border-radius:14px;box-shadow:0 12px 30px -8px rgba(0,0,0,0.18);display:flex;align-items:center;gap:12px;font-weight:700;font-size:13px;color:var(--secondary);animation:float2 5s ease-in-out infinite}
+  .floating-badge i{color:var(--primary)}
+  .fb-1{top:-20px;left:-30px;animation-delay:-2s}
+  .fb-2{bottom:20px;right:-40px}
+  @keyframes float2{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+  .trust{padding:48px 64px;background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+  .trust-inner{max-width:1280px;margin:0 auto;text-align:center}
+  .trust .lbl{font-size:12px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:24px}
+  .trust .row{display:flex;justify-content:space-around;align-items:center;flex-wrap:wrap;gap:32px;opacity:0.65}
+  .trust .row span{font-size:20px;font-weight:800;color:var(--secondary);letter-spacing:-0.02em}
+
+  .features{padding:120px 64px;background:#F8FAFC}
+  .features-inner{max-width:1280px;margin:0 auto}
+  .section-eyebrow{display:inline-block;font-size:13px;font-weight:700;color:var(--primary);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px}
+  .section-h{font-size:clamp(32px,4vw,52px);font-weight:800;color:var(--secondary);letter-spacing:-0.03em;line-height:1.1;margin-bottom:16px;max-width:720px}
+  .section-sub{font-size:18px;color:var(--muted);max-width:680px;margin-bottom:64px;line-height:1.6}
+  .feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .feature{padding:36px;background:#fff;border-radius:20px;border:1px solid var(--border);transition:all 0.3s cubic-bezier(.16,1,.3,1);position:relative;overflow:hidden}
+  .feature:hover{transform:translateY(-6px);border-color:transparent;box-shadow:0 20px 40px -15px rgba(16,185,129,0.25)}
+  .feature::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--primary),transparent);opacity:0;transition:opacity .3s}
+  .feature:hover::before{opacity:1}
+  .feature .ico{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,#ECFDF5,#A7F3D0);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+  .feature .ico i{width:26px;height:26px}
+  .feature h3{font-size:18px;font-weight:800;color:var(--secondary);margin-bottom:8px;letter-spacing:-0.01em}
+  .feature p{font-size:14px;color:var(--muted);line-height:1.6}
+
+  .how{padding:120px 64px;background:#fff}
+  .how-inner{max-width:1280px;margin:0 auto}
+  .how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;position:relative}
+  .how-grid::before{content:"";position:absolute;top:30px;left:5%;right:5%;height:2px;background:linear-gradient(90deg,var(--border),var(--primary),var(--border));z-index:0}
+  .how-step{position:relative;z-index:1}
+  .how-num{width:60px;height:60px;border-radius:50%;background:#fff;border:2px solid var(--primary);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;margin:0 auto 20px;box-shadow:0 0 0 6px #fff,0 8px 20px -4px rgba(16,185,129,0.3)}
+  .how-step h4{font-size:17px;font-weight:800;color:var(--secondary);text-align:center;margin-bottom:8px}
+  .how-step p{font-size:14px;color:var(--muted);text-align:center;line-height:1.6}
+
+  .stats{padding:96px 64px;background:linear-gradient(135deg,#064E3B 0%,#047857 50%,#065F46 100%);color:#fff;position:relative;overflow:hidden}
+  .stats::before{content:"";position:absolute;top:-20%;left:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(16,185,129,0.3),transparent 60%);pointer-events:none}
+  .stats::after{content:"";position:absolute;bottom:-20%;right:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(245,158,11,0.2),transparent 60%);pointer-events:none}
+  .stats-inner{max-width:1280px;margin:0 auto;position:relative;z-index:1;text-align:center}
+  .stats h2{font-size:clamp(28px,3.5vw,42px);font-weight:800;letter-spacing:-0.02em;margin-bottom:12px}
+  .stats .lead{opacity:0.85;font-size:17px;max-width:560px;margin:0 auto 56px}
+  .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+  .stat-num{font-size:clamp(36px,4vw,56px);font-weight:800;letter-spacing:-0.03em;margin-bottom:8px;background:linear-gradient(180deg,#fff,#A7F3D0);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .stat-lbl{opacity:0.8;font-size:14px;font-weight:600}
+
+  .testi{padding:120px 64px;background:#F8FAFC}
+  .testi-card{max-width:880px;margin:0 auto;background:#fff;padding:56px;border-radius:24px;border:1px solid var(--border);box-shadow:0 20px 50px -20px rgba(0,0,0,0.08);text-align:center}
+  .testi-card .quote{font-size:24px;line-height:1.5;color:var(--secondary);font-weight:600;letter-spacing:-0.01em;margin-bottom:32px}
+  .testi-card .quote::before{content:'"';font-size:64px;color:var(--primary);display:block;line-height:0.5;margin-bottom:16px}
+  .testi-author{display:flex;align-items:center;justify-content:center;gap:12px}
+  .testi-author .av{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#10B981,#047857);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800}
+  .testi-author .nm{font-weight:700;color:var(--secondary)}
+  .testi-author .rl{font-size:13px;color:var(--muted)}
+
+  .cta-section{padding:120px 64px;background:#fff}
+  .cta-card{max-width:1100px;margin:0 auto;padding:80px 64px;border-radius:32px;text-align:center;background:linear-gradient(135deg,#064E3B,#047857);color:#fff;position:relative;overflow:hidden}
+  .cta-card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 50%,rgba(16,185,129,0.4),transparent 60%);pointer-events:none}
+  .cta-card > *{position:relative;z-index:1}
+  .cta-card h2{font-size:clamp(32px,4vw,48px);font-weight:800;letter-spacing:-0.03em;margin-bottom:16px;line-height:1.1}
+  .cta-card p{font-size:18px;opacity:0.9;max-width:560px;margin:0 auto 36px}
+  .cta-card .btn{height:56px;padding:0 32px;font-size:16px}
+  .cta-card .btn-primary{background:#fff;color:var(--secondary)}
+  .cta-card .btn-secondary{background:transparent;color:#fff;border:2px solid rgba(255,255,255,0.3)}
+  .cta-card .btn-secondary:hover{background:rgba(255,255,255,0.1);border-color:#fff;color:#fff}
+
+  .footer{padding:64px 64px 32px;background:#0F172A;color:#94A3B8}
+  .footer-inner{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+  .footer h4{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:16px;font-weight:700}
+  .footer ul{list-style:none;padding:0;display:flex;flex-direction:column;gap:10px}
+  .footer ul a{color:#94A3B8;font-size:14px;transition:color .2s}
+  .footer ul a:hover{color:#fff}
+  .footer .brand{font-size:24px;font-weight:800;color:#fff;letter-spacing:-0.03em;margin-bottom:12px}
+  .footer .brand span{color:var(--primary)}
+  .footer .tag{font-size:14px;line-height:1.6;max-width:280px}
+  .footer-bottom{max-width:1280px;margin:0 auto;padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;font-size:13px}
+
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s cubic-bezier(.16,1,.3,1)}
+  .reveal.visible{opacity:1;transform:translateY(0)}
+
+  @media(max-width:1024px){
+    .hero-grid,.feature-grid,.how-grid,.stats-grid{grid-template-columns:1fr 1fr}
+    .footer-inner{grid-template-columns:1fr 1fr}
+    .nav,.hero,.features,.how,.stats,.testi,.cta-section,.footer{padding-left:32px;padding-right:32px}
+    .hero-visual{display:none}
+    .hero-grid{grid-template-columns:1fr}
+  }
+  @media(max-width:680px){
+    .feature-grid,.how-grid,.stats-grid,.footer-inner{grid-template-columns:1fr}
+    .nav .links a:not(.btn){display:none}
+    .how-grid::before{display:none}
+    .cta-card{padding:48px 24px}
+    .testi-card{padding:32px 20px}
+    .testi-card .quote{font-size:18px}
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo">EcoCycle<span>.</span></div>
+  <div class="links">
+    <a href="#features">Platform</a>
+    <a href="#how">How it works</a>
+    <a href="#impact">Impact</a>
+    <a href="LoginPage.html">Sign in</a>
+    <a href="Register.html" class="btn btn-primary">Get Started</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid">
+    <div class="reveal visible">
+      <div class="hero-pill"><span class="live"></span>Live in 12 cities · v2.0 shipping now</div>
+      <h1>Turn waste into <span class="grad">verified value.</span></h1>
+      <p class="lead">EcoCycle is the operating system for circular economies — connecting informal pickers, recyclers, and enterprises with instant payouts, real-time logistics, and ESG-grade impact analytics.</p>
+      <div class="cta-row">
+        <a href="Register.html" class="btn btn-primary"><i data-lucide="rocket"></i>Start free</a>
+        <a href="LoginPage.html" class="btn btn-secondary"><i data-lucide="play-circle"></i>Try the demo</a>
+      </div>
+      <div class="meta">
+        <div><div class="v">12.4K+</div><div class="l">Active pickers</div></div>
+        <div><div class="v">8.4M kg</div><div class="l">Material recovered</div></div>
+        <div><div class="v">R 0</div><div class="l">Setup cost</div></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="floating-badge fb-1"><i data-lucide="check-circle-2"></i>Payout sent</div>
+      <div class="mock">
+        <div class="mock-head">
+          <div class="dots"><span></span><span></span><span></span></div>
+          <div class="url">app.ecocycle.io/dashboard</div>
+        </div>
+        <div class="mock-kpis">
+          <div class="mock-kpi"><div class="l">Today</div><div class="v">48</div><div class="d">↑ 12%</div></div>
+          <div class="mock-kpi"><div class="l">Kg</div><div class="v">1,284</div><div class="d">↑ 8%</div></div>
+          <div class="mock-kpi"><div class="l">Earned</div><div class="v">R 0</div><div class="d">live</div></div>
+        </div>
+        <div class="mock-chart">
+          <div class="b" style="height:40%"></div><div class="b" style="height:55%"></div><div class="b" style="height:38%"></div>
+          <div class="b" style="height:72%"></div><div class="b" style="height:65%"></div><div class="b" style="height:80%"></div>
+          <div class="b" style="height:90%"></div>
+        </div>
+      </div>
+      <div class="floating-badge fb-2"><i data-lucide="leaf"></i>2.4t CO₂ saved this week</div>
+    </div>
+  </div>
+</section>
+
+<section class="trust">
+  <div class="trust-inner">
+    <div class="lbl">Trusted by leading recovery networks</div>
+    <div class="row">
+      <span>GreenLoop</span><span>UrbanCycle</span><span>RecoverIQ</span>
+      <span>WastePro</span><span>BinHero</span><span>EcoChain</span>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="features">
+  <div class="features-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">The Platform</div>
+      <h2 class="section-h">Built for the people doing the real work.</h2>
+      <p class="section-sub">From sidewalk to sorting facility — everything you need to digitize, verify, and scale waste recovery.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature reveal"><div class="ico"><i data-lucide="shield-check"></i></div><h3>Verified Recovery</h3><p>Tamper-proof logging for every gram of material. QR-scan, geo-stamp, weight capture — chain of custody by default.</p></div>
+      <div class="feature reveal"><div class="ico"><i data-lucide="zap"></i></div><h3>Instant Payouts</h3><p>Auto-settle pickers in seconds based on real-time market indices and material grades. No paperwork.</p></div>
+      <div class="feature reveal"><div class="ico"><i data-lucide="building-2"></i></div><h3>Enterprise Suite</h3><p>Multi-branch governance, role-based access, and audit trails for organizations with 100+ collection points.</p></div>
+      <div class="feature reveal"><div class="ico"><i data-lucide="line-chart"></i></div><h3>ESG Reporting</h3><p>Institutional-grade dashboards for CO₂ offsets, circularity ratios, and stakeholder-ready impact reports.</p></div>
+      <div class="feature reveal"><div class="ico"><i data-lucide="shopping-cart"></i></div><h3>Built-in Marketplace</h3><p>Direct pipeline from informal recovery to industrial recycling buyers. List, negotiate, settle.</p></div>
+      <div class="feature reveal"><div class="ico"><i data-lucide="brain"></i></div><h3>Eco Intelligence</h3><p>Predictive AI for material flow, pricing volatility, and supply chain health. Stay ahead of the curve.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="how" id="how">
+  <div class="how-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">Get started in minutes</div>
+      <h2 class="section-h">Four steps to a smarter recovery loop.</h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-step reveal"><div class="how-num">1</div><h4>Onboard pickers</h4><p>Issue digital IDs with one tap. KYC built in.</p></div>
+      <div class="how-step reveal"><div class="how-num">2</div><h4>Scan & weigh</h4><p>QR-scan at intake. Weight, grade, geo captured automatically.</p></div>
+      <div class="how-step reveal"><div class="how-num">3</div><h4>Auto-payout</h4><p>Pickers paid instantly. You get a verified ledger entry.</p></div>
+      <div class="how-step reveal"><div class="how-num">4</div><h4>Sell & report</h4><p>List materials in the marketplace. Export ESG reports anytime.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="stats" id="impact">
+  <div class="stats-inner">
+    <div class="reveal">
+      <h2>Measurable planetary impact.</h2>
+      <p class="lead">Every transaction on EcoCycle is a verified contribution to a cleaner, more circular world.</p>
+    </div>
+    <div class="stats-grid">
+      <div class="reveal"><div class="stat-num" data-count="12400">0</div><div class="stat-lbl">Pickers Onboarded</div></div>
+      <div class="reveal"><div class="stat-num" data-count="8400000">0</div><div class="stat-lbl">Kg Recovered</div></div>
+      <div class="reveal"><div class="stat-num" data-count="2100">0</div><div class="stat-lbl">Tons CO₂ Diverted</div></div>
+      <div class="reveal"><div class="stat-num" data-count="340">0</div><div class="stat-lbl">Operational Hubs</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="testi">
+  <div class="testi-card reveal">
+    <p class="quote">EcoCycle turned our patchwork of paper logs into a real-time recovery business. We onboarded 400 pickers in our first quarter and tripled verified throughput.</p>
+    <div class="testi-author">
+      <div class="av">L</div>
+      <div style="text-align:left">
+        <div class="nm">Lerato M.</div>
+        <div class="rl">Operations Director · GreenLoop SA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="cta-card reveal">
+    <h2>Ready to scale your impact?</h2>
+    <p>Join thousands of operators turning waste streams into verified, profitable recovery loops.</p>
+    <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap">
+      <a href="Register.html" class="btn btn-primary"><i data-lucide="rocket"></i>Get started free</a>
+      <a href="LoginPage.html" class="btn btn-secondary"><i data-lucide="log-in"></i>Sign in</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="brand">EcoCycle<span>.</span></div>
+      <p class="tag">The operating system for circular economies. Building a cleaner planet, one verified transaction at a time.</p>
+    </div>
+    <div>
+      <h4>Product</h4>
+      <ul>
+        <li><a href="#features">Platform</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#impact">Impact</a></li>
+        <li><a href="LoginPage.html">Sign in</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Press</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Resources</h4>
+      <ul>
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">API</a></li>
+        <li><a href="#">Status</a></li>
+        <li><a href="#">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 EcoCycle Inc. All rights reserved.</span>
+    <span>Made for a circular planet.</span>
+  </div>
+</footer>
+
+<script>
+  lucide.createIcons();
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('visible'); io.unobserve(e.target); }});
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  const fmt = n => n >= 1_000_000 ? (n/1_000_000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : Math.round(n);
+  const countObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(!e.isIntersecting) return;
+      const el = e.target; const target = +el.dataset.count;
+      const start = performance.now(); const dur = 1600;
+      function tick(now){
+        const t = Math.min(1, (now-start)/dur);
+        const eased = 1 - Math.pow(1-t, 3);
+        el.textContent = fmt(target * eased);
+        if(t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      countObserver.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
+</script>
+</body>
+</html>

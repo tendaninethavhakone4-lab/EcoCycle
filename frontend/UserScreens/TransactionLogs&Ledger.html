@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Ledger · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header">
+      <div><div class="page-title">Transaction Ledger</div><div class="page-sub">All live recorded pickups · ZAR</div></div>
+      <div class="row"><button class="btn btn-secondary" id="btnCsv">Export CSV</button><button class="btn btn-secondary" id="btnPdf">Export PDF</button></div>
+    </div>
+    <div class="section">
+      <div class="table-wrap"><table>
+        <thead><tr><th>ID</th><th>Picker</th><th>Material</th><th>Weight</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead>
+        <tbody data-live-table="transactions"></tbody>
+      </table></div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["user","admin","superadmin"]);
+  renderShell("user");
+  document.getElementById("btnCsv").onclick = async () => {
+    const { transactions = [] } = await api("/transactions");
+    await window.EcoCycle.ready;
+    EcoCycle.CSV.download(transactions, "transactions-" + new Date().toISOString().slice(0,10) + ".csv");
+  };
+  document.getElementById("btnPdf").onclick = async () => {
+    const { transactions = [] } = await api("/transactions");
+    await window.EcoCycle.ready;
+    EcoCycle.Invoice.fromRows(transactions, { title: "Transaction Ledger" });
+  };
+</script>
+</body>
+</html>

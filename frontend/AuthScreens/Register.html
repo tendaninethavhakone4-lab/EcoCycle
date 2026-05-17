@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Register · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+</head>
+<body>
+<div class="auth-shell">
+  <div class="auth-brand">
+    <div>
+      <span class="badge"><i data-lucide="leaf" style="width:14px;height:14px;margin-right:6px;vertical-align:-2px"></i>Join the Network</span>
+      <h1>EcoCycle.</h1>
+      <p>Empowering informal waste pickers and recycling businesses with smart transactions, real-time inventory, and impact tracking.</p>
+      <ul style="margin-top:32px; padding:0; list-style:none; display:flex; flex-direction:column; gap:14px">
+        <li style="display:flex;align-items:center;gap:12px"><i data-lucide="check-circle-2" style="color:#34D399;width:20px;height:20px"></i>Free forever for individual operators</li>
+        <li style="display:flex;align-items:center;gap:12px"><i data-lucide="check-circle-2" style="color:#34D399;width:20px;height:20px"></i>Instant verified payouts</li>
+        <li style="display:flex;align-items:center;gap:12px"><i data-lucide="check-circle-2" style="color:#34D399;width:20px;height:20px"></i>Real-time impact dashboard</li>
+      </ul>
+    </div>
+    <div style="opacity:.8;font-size:13px">© 2026 EcoCycle — Building a circular economy.</div>
+  </div>
+  <div class="auth-form-wrap">
+    
+<form class="auth-card animate-in" onsubmit="return doRegister(event)">
+  <h2>Create your account</h2>
+  <p class="sub">Get started in less than 60 seconds.</p>
+  <div class="field"><label>Full name</label><input class="input" id="name" placeholder="Jane Doe" required/></div>
+  <div class="field"><label>Work email</label><input class="input" type="email" id="email" placeholder="you@company.com" required/></div>
+  <div class="grid grid-2" style="gap:12px">
+    <div class="field"><label>Phone</label><input class="input" id="phone" placeholder="+27 ..."/></div>
+    <div class="field"><label>Branch (optional)</label><input class="input" id="branch" placeholder="e.g. Soweto Central"/></div>
+  </div>
+  <div class="field">
+    <label>Password</label>
+    <input class="input" type="password" id="password" placeholder="At least 8 characters" required oninput="checkStrength(this.value)"/>
+    <div class="pwd-strength" id="strength"><span></span><span></span><span></span><span></span></div>
+    <div class="pwd-hint" id="strengthHint">Use 8+ characters with letters, numbers & symbols.</div>
+  </div>
+  <label style="display:flex; gap:8px; font-size:13px; color:var(--muted); margin:8px 0 16px">
+    <input type="checkbox" required style="margin-top:3px"/>
+    <span>I agree to the <a href="#" style="color:var(--primary);font-weight:700">Terms</a> and <a href="#" style="color:var(--primary);font-weight:700">Privacy Policy</a></span>
+  </label>
+  <button class="btn btn-primary btn-block" type="submit"><i data-lucide="user-plus"></i>Create Account</button>
+  <div class="center mt-3 muted">Already have an account? <a href="LoginPage.html" style="color:var(--primary);font-weight:700">Sign in →</a></div>
+</form>
+<script>
+function checkStrength(v){
+  let score = 0;
+  if(v.length >= 8) score++;
+  if(/[A-Z]/.test(v) && /[a-z]/.test(v)) score++;
+  if(/\d/.test(v)) score++;
+  if(/[^A-Za-z0-9]/.test(v)) score++;
+  const el = document.getElementById('strength');
+  el.className = 'pwd-strength s' + score;
+  const hints = ['Use 8+ characters with letters, numbers & symbols.','Weak — add more variety','Fair — add a number or symbol','Strong','Excellent password'];
+  document.getElementById('strengthHint').textContent = hints[score];
+}
+async function doRegister(e){
+  e.preventDefault();
+  const body = {
+    name:document.getElementById('name').value.trim(),
+    email:document.getElementById('email').value.trim(),
+    phone:document.getElementById('phone').value.trim(),
+    branch:document.getElementById('branch').value.trim(),
+    password:document.getElementById('password').value
+  };
+  try {
+    const r = await api("/auth/register",{method:"POST",body});
+    toast(r.message || "Account created. Awaiting administrator approval.");
+    setTimeout(()=>location.href="LoginPage.html", 2200);
+  } catch(err) {
+    toast(err.message || "Registration failed", 'error');
+  }
+  return false;
+}
+</script>
+
+  </div>
+</div>
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

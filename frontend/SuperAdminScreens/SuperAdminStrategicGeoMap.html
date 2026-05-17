@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Geo Map · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Strategic Geo Map</div><div class="page-sub">Live global activity</div></div></div>
+    <div id="map" style="height:600px;border-radius:14px;overflow:hidden;background:#0f172a"></div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["superadmin"]);
+  renderShell("superadmin");
+  (async () => { await EcoCycle.ready; await EcoCycle.loadLeaflet();
+    const map = L.map("map").setView([-26.2041,28.0473],4);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",{ attribution:"&copy; OSM" }).addTo(map);
+    try {
+      const [{ branches=[] }, pu] = await Promise.all([api("/branches"), api("/logistics/pickups").catch(()=>({pickups:[]}))]);
+      const bounds = [];
+      branches.forEach(b => { if(b.lat&&b.lng){ L.circleMarker([b.lat,b.lng],{radius:9,color:"#10b981",fillColor:"#10b981",fillOpacity:.7}).addTo(map).bindPopup(`<strong>${b.name||""}</strong><br>${b.country||""}`); bounds.push([b.lat,b.lng]); }});
+      (pu.pickups||[]).forEach(p => { if(p.lat&&p.lng){ L.marker([p.lat,p.lng]).addTo(map); bounds.push([p.lat,p.lng]); }});
+      if(bounds.length) map.fitBounds(bounds,{padding:[40,40]});
+    } catch(e){ console.warn(e); }
+  })();
+</script>
+</body>
+</html>

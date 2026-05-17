@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>New Transaction · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+<style>.step{padding:6px 12px;border-radius:999px;background:var(--bg);font-weight:600;font-size:12px}.step.active{background:var(--primary);color:#fff}</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">New Transaction</div><div class="page-sub">Live pickup recording in ZAR</div></div></div>
+    <div class="section">
+      <div class="row mb-4" id="steps">
+        <div class="step active">1. Picker</div><div>›</div>
+        <div class="step">2. Materials</div><div>›</div>
+        <div class="step">3. Review</div><div>›</div>
+        <div class="step">4. Receipt</div>
+      </div>
+
+      <div id="step1">
+        <div class="field"><label>Picker</label>
+          <select id="picker" class="input"><option>Loading…</option></select>
+        </div>
+        <button class="btn btn-primary" id="btn1Next">Next →</button>
+      </div>
+
+      <div id="step2" style="display:none">
+        <div class="table-wrap"><table>
+          <thead><tr><th>Material</th><th>Weight (kg)</th><th>Price/kg</th><th>Subtotal</th><th></th></tr></thead>
+          <tbody id="items"></tbody>
+        </table></div>
+        <button class="btn btn-secondary mt-3" id="btnAddRow">+ Add Row</button>
+        <div class="row mt-4">
+          <button class="btn btn-secondary" id="btn2Back">← Back</button>
+          <button class="btn btn-primary" id="btn2Next">Review →</button>
+        </div>
+      </div>
+
+      <div id="step3" style="display:none">
+        <div id="review"></div>
+        <div class="row mt-4">
+          <button class="btn btn-secondary" id="btn3Back">← Back</button>
+          <button class="btn btn-primary" id="btnConfirm">Confirm & Save</button>
+        </div>
+      </div>
+
+      <div id="step4" style="display:none">
+        <div id="receipt" class="card"></div>
+        <div class="row mt-4">
+          <button class="btn btn-secondary" id="btnPrint">Print Receipt</button>
+          <a href="TransactionFlow(Wizard).html" class="btn btn-primary">+ New Transaction</a>
+          <a href="TransactionLogs&Ledger.html" class="btn btn-ghost">View Ledger</a>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["user","admin","superadmin"]);
+  renderShell("user");
+
+  let PRICES = {};
+  let rows = [];
+  let lastTx = null;
+
+  (async () => {
+    try {
+      const [pp, prc] = await Promise.all([api("/pickers"), api("/prices")]);
+      const pickers = pp.pickers || pp || [];
+      const sel = document.getElementById("picker");
+      sel.innerHTML = pickers.length
+        ? pickers.map(p => `<option value="${p.id}">${p.id} — ${p.name||""}</option>`).join("")
+        : '<option value="">No pickers available</option>';
+      const presetId = new URLSearchParams(location.search).get("picker");
+      if(presetId) sel.value = presetId;
+      (prc.prices || prc || []).forEach(r => { PRICES[r.material] = Number(r.price_per_kg||r.price||0); });
+    } catch(e){ toast(e.message,"error"); }
+  })();
+
+  function addRow(){
+    const mats = Object.keys(PRICES);
+    rows.push({ material: mats[0]||"", weight: 0 });
+    render();
+  }
+  function render(){
+    const mats = Object.keys(PRICES);
+    document.getElementById("items").innerHTML = rows.map((r,i)=>`
+      <tr>
+        <td><select class="input" onchange="rows[${i}].material=this.value;render()">${mats.map(m=>`<option ${m===r.material?'selected':''}>${m}</option>`).join("")}</select></td>
+        <td><input class="input" type="number" min="0" step="0.1" value="${r.weight}" onchange="rows[${i}].weight=parseFloat(this.value)||0;render()"/></td>
+        <td>R ${(PRICES[r.material]||0).toFixed(2)}</td>
+        <td>R ${(r.weight*(PRICES[r.material]||0)).toFixed(2)}</td>
+        <td><button class="btn btn-ghost btn-sm" onclick="rows.splice(${i},1);render()">✕</button></td>
+      </tr>`).join("");
+  }
+  window.rows = rows; window.render = render;
+
+  function go(s){
+    ["step1","step2","step3","step4"].forEach((id,i)=>document.getElementById(id).style.display = (i+1)===s?"":"none");
+    document.querySelectorAll("#steps .step").forEach((el,i)=>el.classList.toggle("active",i<s));
+    if(s===2 && rows.length===0) addRow();
+    if(s===3){
+      const total = rows.reduce((a,r)=>a+r.weight*(PRICES[r.material]||0),0);
+      const totalKg = rows.reduce((a,r)=>a+Number(r.weight||0),0);
+      document.getElementById("review").innerHTML = `<div class="card">
+        <strong>Picker:</strong> ${document.getElementById("picker").value}<br/>
+        <strong>Items:</strong> ${rows.length}<br/>
+        <strong>Total Weight:</strong> ${totalKg.toFixed(2)} kg<br/>
+        <strong>Total Amount:</strong> R ${total.toFixed(2)}
+      </div>`;
+    }
+  }
+  document.getElementById("btnAddRow").onclick = addRow;
+  document.getElementById("btn1Next").onclick = () => go(2);
+  document.getElementById("btn2Back").onclick = () => go(1);
+  document.getElementById("btn2Next").onclick = () => go(3);
+  document.getElementById("btn3Back").onclick = () => go(2);
+  document.getElementById("btnPrint").onclick = () => window.print();
+  document.getElementById("btnConfirm").onclick = async () => {
+    const picker_id = document.getElementById("picker").value;
+    if(!picker_id) return toast("Select a picker","error");
+    if(!rows.length) return toast("Add at least one item","error");
+    try {
+      const items = rows.filter(r=>r.weight>0).map(r=>({ material:r.material, weight:r.weight, price_per_kg:PRICES[r.material]||0 }));
+      const total = items.reduce((a,r)=>a+r.weight*r.price_per_kg,0);
+      const tx = await api("/transactions",{ method:"POST", body:{ picker_id, items, amount: total }});
+      lastTx = tx.transaction || tx;
+      const totalKg = items.reduce((a,r)=>a+r.weight,0);
+      document.getElementById("receipt").innerHTML = `
+        <h3>Receipt</h3>
+        <p><strong>Transaction ID:</strong> ${lastTx.id||"—"}</p>
+        <p><strong>Picker:</strong> ${picker_id}</p>
+        <p><strong>Total Weight:</strong> ${totalKg.toFixed(2)} kg</p>
+        <p><strong>Total Amount:</strong> R ${Number(lastTx.amount||total).toFixed(2)}</p>
+        <p class="muted">${new Date().toLocaleString()}</p>`;
+      toast("Transaction saved");
+      go(4);
+    } catch(e){ toast(e.message,"error"); }
+  };
+</script>
+</body>
+</html>

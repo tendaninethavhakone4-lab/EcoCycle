@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Environmental · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Environmental Dashboard</div><div class="page-sub">Live sustainability KPIs</div></div></div>
+    <div class="grid grid-4">
+      <div class="card kpi"><h3>CO₂ Saved (kg)</h3><div class="value" data-live="kpi.co2">—</div></div>
+      <div class="card kpi"><h3>Trees Equivalent</h3><div class="value" data-live="kpi.trees">—</div></div>
+      <div class="card kpi"><h3>Landfill Diverted</h3><div class="value" data-live="kpi.landfill">—</div></div>
+      <div class="card kpi"><h3>Water Saved (L)</h3><div class="value" data-live="kpi.water">—</div></div>
+    </div>
+    <div class="section"><div class="section-title">Diversion by Material</div><div id="matChart" style="height:300px"></div></div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; throw new Error("auth required"); }
+  Auth.requireRole(["admin","superadmin"]);
+  renderShell("admin");
+  (async () => {
+    await window.EcoCycle.ready;
+    const { transactions = [] } = await api("/transactions");
+    const byMat = {};
+    transactions.forEach(t => byMat[t.material||"Other"] = (byMat[t.material||"Other"]||0) + Number(t.weight||0));
+    const labels = Object.keys(byMat);
+    const data = labels.map(k => +byMat[k].toFixed(1));
+    if(labels.length) EcoCycle.Charts.bar("#matChart", { labels, data, label: "Kilograms" });
+    else document.getElementById("matChart").innerHTML = '<p class="muted" style="text-align:center;padding:48px">No transaction data yet.</p>';
+  })().catch(console.warn);
+</script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Admin Hub · EcoCycle</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="../assets/css/styles.css" />
+
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar"></aside>
+  <header class="topbar"></header>
+  <main class="main">
+
+    <div class="page-header"><div><div class="page-title">Admin Dashboard Hub</div><div class="page-sub">Branch performance overview · live data</div></div></div>
+    <div class="grid grid-4">
+      <div class="card kpi"><h3>Total Revenue</h3><div class="value" data-live="kpi.totalRevenue">—</div><div class="delta">live</div></div>
+      <div class="card kpi"><h3>Active Pickers</h3><div class="value" data-live="kpi.activePickers">—</div><div class="delta">live</div></div>
+      <div class="card kpi"><h3>Total Volume</h3><div class="value" data-live="kpi.totalKg">—</div><div class="delta">live</div></div>
+      <div class="card kpi"><h3>Transactions</h3><div class="value" data-live="kpi.txCount">—</div><div class="delta">live</div></div>
+    </div>
+    <div class="grid grid-2 mt-4">
+      <div class="section"><div class="section-title">Revenue Trend</div><div id="revTrend" style="height:280px"></div></div>
+      <div class="section"><div class="section-title">Recent Transactions</div><div class="table-wrap"><table><thead><tr><th>ID</th><th>Picker</th><th>Material</th><th>Weight</th><th>Amount</th><th>Status</th><th>Date</th></tr></thead><tbody data-live-table="transactions" data-limit="6"></tbody></table></div></div>
+    </div>
+    <div class="section mt-4"><div class="section-title">Recent Alerts</div><div class="table-wrap"><table><thead><tr><th>Level</th><th>Message</th><th>Date</th></tr></thead><tbody data-live-table="alerts" data-limit="10"></tbody></table></div></div>
+
+  </main>
+</div>
+<script src="../assets/js/app.js"></script>
+<script>
+  if(!Auth.user){ location.href = "../AuthScreens/LoginPage.html"; }
+  Auth.requireRole(["admin","superadmin"]);
+  renderShell("admin");
+  (async () => {
+    await window.EcoCycle.ready;
+    const { transactions } = await api("/transactions");
+    // Build daily totals for last 14 days
+    const days = {};
+    transactions.forEach(t => { const d = (t.created_at||"").slice(0,10); days[d] = (days[d]||0) + Number(t.amount||0); });
+    const labels = Object.keys(days).sort().slice(-14);
+    const data   = labels.map(d => +days[d].toFixed(2));
+    EcoCycle.Charts.area("#revTrend", { labels, data, label: "Revenue (R)" });
+  })().catch(console.warn);
+</script>
+</body>
+</html>
