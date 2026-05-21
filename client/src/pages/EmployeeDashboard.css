@@ -163,6 +163,8 @@ body {
 /* Main section styling */
 .main {
   margin-left: var(--sidebar-w);
+  width: calc(100% - var(--sidebar-w));
+  min-width: 0;
   flex: 1;
   padding: 36px 40px 60px;
 }
