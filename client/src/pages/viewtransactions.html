@@ -1,123 +1,107 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="pricemanagement1.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>EcoCycle — View Transactions</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="viewtransactions.css"/>
 </head>
 <body>
- 
-<aside class="sidebar">
 
-  <!-- Brand / Logo area -->
-  <div class="sidebar-brand">
-    <div class="brand-icon"></div>
-    <div class="brand-text">
-      <h2>EcoCycle</h2>
-      <p>Informal Pickers Management</p>
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="ecocycle-logo">
+      <div class="brand-icon">
+        <svg width="22" height="22" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
+      </div>
+      <div>
+        <div class="ecocycle-wordmark"><span class="eco">Eco</span>cycle</div>
+        <div class="ecocycle-sub">Informal Pickers Management</div>
+      </div>
     </div>
   </div>
+  <button class="topbar-logout">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+    Logout
+  </button>
+</header>
 
-  <!-- Navigation links -->
-  <nav>
-    <a class="nav-item" href="#">Dashboard</a>
-<a class="nav-item" href="pricemanagementpage.html">Price Management</a>
-    <a class="nav-item active" href="#">View Transactions</a>
-    <a class="nav-item" href="#">Income Board</a>
-    <a class="nav-item" href="#">Environmental Dashboard</a>
-  </nav>
+<div class="layout">
+  <aside class="sidebar">
+    <a class="nav-item" href="admin-dashboard.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="pricemanagementpage.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+      Price Management
+    </a>
+    <a class="nav-item active" href="viewtransactions.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+      View Transactions
+    </a>
+    <a class="nav-item" href="incomeboard.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Income Board
+    </a>
+    <a class="nav-item" href="environmental.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+      Environmental Dashboard
+    </a>
+  </aside>
 
-</aside>   
+  <main class="main">
+    <h1 class="page-title">View Transactions</h1>
+    <p class="page-sub">Review every transaction, payment status, and collector activity with the same admin dashboard layout.</p>
 
-    <div class="main">
-
-  <!-- Top bar -->
-  <div class="topbar">
-    <button class="logout-btn">⇥ Logout</button>
-  </div>
-
-  <!-- Page content -->
-  <div class="content">
-
-    <div class="page-header">
-      <h1>View Transactions</h1>
-      <p>Monitor all waste picker transactions</p>
+    <div class="section-card">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Transaction ID</th>
+              <th>Date</th>
+              <th>Collector</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>TRX-0012</td>
+              <td>May 22, 2025</td>
+              <td>Sam Khumalo</td>
+              <td class="badge badge-green">R 1,250.00</td>
+              <td><span class="badge badge-green">Completed</span></td>
+            </tr>
+            <tr>
+              <td>TRX-0013</td>
+              <td>May 23, 2025</td>
+              <td>Lerato Mokoena</td>
+              <td class="badge badge-blue">R 860.00</td>
+              <td><span class="badge badge-blue">Pending</span></td>
+            </tr>
+            <tr>
+              <td>TRX-0014</td>
+              <td>May 24, 2025</td>
+              <td>Themba Ndlovu</td>
+              <td class="badge badge-green">R 2,150.00</td>
+              <td><span class="badge badge-green">Completed</span></td>
+            </tr>
+            <tr>
+              <td>TRX-0015</td>
+              <td>May 25, 2025</td>
+              <td>Anele Dlamini</td>
+              <td class="badge badge-purple">R 725.00</td>
+              <td><span class="badge badge-purple">Rejected</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
-
-    <!-- Table card -->
-    <div class="table-card">
-      <table>
-        <thead>
-          <tr>
-            <th>Transaction ID</th>
-            <th>Waste Picker</th>
-            <th>Material</th>
-            <th>Quantity</th>
-            <th>Payment</th>
-            <th>Date</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>#000001</td>
-            <td>John Mthembu</td>
-            <td>Plastic</td>
-            <td>12.5 kg</td>
-            <td class="payment">R 150.00</td>
-            <td>2026-04-09</td>
-          </tr>
-          <tr>
-            <td>#000002</td>
-            <td>Sarah Ndlovu</td>
-            <td>Paper</td>
-            <td>18.0 kg</td>
-            <td class="payment">R 144.00</td>
-            <td>2026-04-09</td>
-          </tr>
-          <tr>
-            <td>#000003</td>
-            <td>David Zuma</td>
-            <td>Metal</td>
-            <td>8.5 kg</td>
-            <td class="payment">R 212.50</td>
-            <td>2026-04-08</td>
-          </tr>
-          <tr>
-            <td>#000004</td>
-            <td>Maria Khumalo</td>
-            <td>Glass</td>
-            <td>22.0 kg</td>
-            <td class="payment">R 132.00</td>
-            <td>2026-04-08</td>
-          </tr>
-          <tr>
-            <td>#000005</td>
-            <td>Peter Dlamini</td>
-            <td>Cardboard</td>
-            <td>15.5 kg</td>
-            <td class="payment">R 155.00</td>
-            <td>2026-04-07</td>
-          </tr>
-          <tr>
-            <td>#000006</td>
-            <td>John Mthembu</td>
-            <td>Metal</td>
-            <td>6.0 kg</td>
-            <td class="payment">R 150.00</td>
-            <td>2026-04-07</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-  </div>
+  </main>
 </div>
-    
-<script src="viewtransactions.js"></script>
-   
+<script src="admin-dashboard.js"></script>
 </body>
 </html>
