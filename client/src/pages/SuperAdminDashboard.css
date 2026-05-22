@@ -95,6 +95,19 @@ body {
   margin-top: 2px;
   letter-spacing: 0.01em;
 }
+.ecocycle-badge {
+  display: inline-flex;
+  margin-top: 6px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  background: linear-gradient(135deg, #16381a 0%, #2E7D32 100%);
+  border: none;
+  border-radius: 999px;
+  padding: 5px 12px;
+  box-shadow: 0 2px 8px rgba(46,125,50,0.18);
+}
 .topbar-logout {
   display: flex;
   align-items: center;
