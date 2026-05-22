@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <link rel="stylesheet" href="admin-dashboard.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>EcoCycle</h1>
+                    <p>Informal Pickers Management</p>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-cog"></i>
+                    <span>Price Management</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-list"></i>
+                    <span>View Transactions</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-dollar-sign"></i>
+                    <span>Income Board</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-seedling"></i>
+                    <span>Environmental<br>Dashboard</span>
+                </a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <button class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </header>
+
+            <div class="dashboard">
+                <div class="page-header">
+                    <h2>Admin Dashboard</h2>
+                    <p>Monitor operations and manage pricing</p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Total Transactions</h3>
+                            <div class="stat-value" id="totalTransactions">0</div>
+                            <p class="stat-label">This month</p>
+                        </div>
+                        <div class="stat-icon document">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Revenue Summary</h3>
+                            <div class="stat-value" id="revenueSummary">R 0</div>
+                            <p class="stat-label">April 2026</p>
+                        </div>
+                        <div class="stat-icon dollar">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <h3>Growth Rate</h3>
+                            <div class="stat-value positive" id="growthRate">+0%</div>
+                            <p class="stat-label">vs last month</p>
+                        </div>
+                        <div class="stat-icon trend">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bottom-grid">
+                    <div class="card">
+                        <h3 class="card-title">Top Performing Centres</h3>
+                        <div class="centres-list" id="centresList"></div>
+                    </div>
+                    <div class="card">
+                        <h3 class="card-title">Recent Price Updates</h3>
+                        <div class="updates-list" id="updatesList"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="admin-dashboard.js"></script>
+</body>
+</html>

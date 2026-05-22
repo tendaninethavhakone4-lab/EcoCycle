@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EcoCycle — Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="login.css" />
+</head>
+<body>
+<div class="auth-shell">
+  <div class="auth-brand">
+    <div>
+      <span class="badge">Secure access</span>
+      <h1>Welcome back.</h1>
+      <p>Sign in to continue managing ECOCycle and tracking your recycling operations, rewards, and impact.</p>
+    </div>
+    <div style="opacity:.8;font-size:13px">© 2026 EcoCycle — powering sustainable communities.</div>
+  </div>
+
+  <div class="auth-form-wrap">
+    <form class="auth-card animate-in" id="loginForm">
+      <div class="brand-icon auth-logo">
+        <svg width="28" height="28" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
+      </div>
+      <h2>Sign in to EcoCycle</h2>
+      <p class="sub">Enter your email and password to keep your account secure and stay connected.</p>
+
+      <div class="field">
+        <label>Email address</label>
+        <input class="input" type="email" id="email" placeholder="you@company.com" required />
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <input class="input" type="password" id="password" placeholder="••••••••" required />
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+      <div class="center mt-3"><a href="ForgotPassword.html">Forgot password?</a></div>
+      <div class="center mt-2">Don't have an account? <a href="create-account.html">Create one</a></div>
+    </form>
+  </div>
+</div>
+
+<script src="login.js"></script>
+</body>
+</html>

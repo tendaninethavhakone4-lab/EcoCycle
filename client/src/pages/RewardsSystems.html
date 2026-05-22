@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="RewardsSystem.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="ecocycle-logo">
+      <div class="brand-icon">
+        <svg width="22" height="22" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
+      </div>
+      <div>
+        <div class="ecocycle-wordmark">Ecocycle</div>
+        <div class="ecocycle-sub">Informal Pickers Management</div>
+      </div>
+    </div>
+  </div>
+  <button class="topbar-logout">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+    Logout
+  </button>
+</header>
+ 
+<div class="layout">
+
+  <aside class="sidebar">
+    <a class="nav-item" href="EmployeeDashboard.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="RegisterUsers.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+      Register Waste Picker
+    </a>
+    <a class="nav-item" href="ViewRegisteredUser.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+      Registered Pickers
+    </a>
+    <a class="nav-item" href="RecordTransaction_Employee.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+      Record Transaction
+    </a>
+    <a class="nav-item" href="IncomeBoard.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Income Board
+    </a>
+    <a class="nav-item" href="Environmental.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+      Environmental Dashboard
+      </a>
+<a class="nav-item active" href="RewardsSystems.html">
+  <svg fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round"
+    viewBox="0 0 24 24">
+
+    <!-- Trophy Icon (clean + correct) -->
+    <path d="M8 21h8"></path>
+    <path d="M12 17v4"></path>
+    <path d="M7 4h10v5a5 5 0 0 1-10 0V4z"></path>
+    <path d="M5 6H3a2 2 0 0 0 2 2"></path>
+    <path d="M19 6h2a2 2 0 0 1-2 2"></path>
+  </svg>
+
+  Rewards System
+</a>
+<a class="nav-item" href="Settings.html">
+  <svg fill="none" stroke="currentColor" stroke-width="2"
+    stroke-linecap="round" stroke-linejoin="round"
+    viewBox="0 0 24 24">
+
+    <circle cx="12" cy="12" r="3"></circle>
+
+    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06
+    a2 2 0 0 1 0 2.83
+    2 2 0 0 1-2.83 0l-.06-.06
+    a1.65 1.65 0 0 0-1.82-.33
+    1.65 1.65 0 0 0-1 1.51V21
+    a2 2 0 0 1-2 2
+    2 2 0 0 1-2-2v-.09
+    a1.65 1.65 0 0 0-1-1.51
+    1.65 1.65 0 0 0-1.82.33l-.06.06
+    a2 2 0 0 1-2.83 0
+    2 2 0 0 1 0-2.83l.06-.06
+    a1.65 1.65 0 0 0 .33-1.82
+    1.65 1.65 0 0 0-1.51-1H3
+    a2 2 0 0 1-2-2
+    2 2 0 0 1 2-2h.09
+    a1.65 1.65 0 0 0 1.51-1
+    1.65 1.65 0 0 0-.33-1.82l-.06-.06
+    a2 2 0 0 1 0-2.83
+    2 2 0 0 1 2.83 0l.06.06
+    a1.65 1.65 0 0 0 1.82.33H9
+    a1.65 1.65 0 0 0 1-1.51V3
+    a2 2 0 0 1 2-2
+    2 2 0 0 1 2 2v.09
+    a1.65 1.65 0 0 0 1 1.51
+    1.65 1.65 0 0 0 1.82-.33l.06-.06
+    a2 2 0 0 1 2.83 0
+    2 2 0 0 1 0 2.83l-.06.06
+    a1.65 1.65 0 0 0-.33 1.82V9
+    a1.65 1.65 0 0 0 1.51 1H21
+    a2 2 0 0 1 2 2
+    2 2 0 0 1-2 2h-.09
+    a1.65 1.65 0 0 0-1.51 1z">
+    </path>
+
+  </svg>
+  Settings
+</a>
+  </aside>
+
+ 
+<!-- MAIN -->
+<main class="main">
+  <div class="page-header">
+    <h1>🏆 Rewards System</h1>
+    <p>Track achievements, earn XP, climb the leaderboard & unlock real rewards</p>
+  </div>
+ 
+  <!-- LIVE TICKER -->
+  <div class="live-ticker">
+    <div class="live-dot"></div>
+    <span class="ticker-label">Live</span>
+    <div class="ticker-scroll">
+      <div class="ticker-inner" id="tickerInner">
+        <!-- duplicated for seamless scroll -->
+      </div>
+    </div>
+  </div>
+ 
+  <!-- TOP STATS -->
+  <div class="stats-row">
+    <div class="stat-card green">
+      <div class="stat-icon green">⭐</div>
+      <div class="stat-label">Total XP</div>
+      <div class="stat-value" id="totalXP">3,840</div>
+      <div class="stat-sub">Level 7 • Gold Tier</div>
+    </div>
+    <div class="stat-card gold">
+      <div class="stat-icon gold">🔥</div>
+      <div class="stat-label">Current Streak</div>
+      <div class="stat-value">12 days</div>
+      <div class="stat-sub">Personal best: 18 days</div>
+    </div>
+    <div class="stat-card silver">
+      <div class="stat-icon silver">🥇</div>
+      <div class="stat-label">Leaderboard Rank</div>
+      <div class="stat-value">#3</div>
+      <div class="stat-sub">Top 6% of all pickers</div>
+    </div>
+    <div class="stat-card bronze">
+      <div class="stat-icon bronze">🎖️</div>
+      <div class="stat-label">Badges Earned</div>
+      <div class="stat-value">14 / 28</div>
+      <div class="stat-sub">2 new this week</div>
+    </div>
+  </div>
+ 
+  <!-- PROFILE + STREAK -->
+  <div class="two-col" style="margin-bottom:24px">
+    <!-- XP Profile -->
+    <div class="profile-card">
+      <div class="profile-top">
+        <div class="avatar">🧑‍🌾</div>
+        <div class="profile-info">
+          <strong>Sipho Nkosi</strong>
+          <span>Waste Picker · Soweto Zone 4</span>
+          <div class="rank-badge">⭐ Gold Tier · Level 7</div>
+        </div>
+      </div>
+      <div class="xp-section">
+        <div class="xp-row">
+          <span class="xp-label">Progress to Level 8</span>
+          <div class="xp-nums">
+            <span class="xp-current">3,840</span>
+            <span class="xp-total">/ 4,500 XP</span>
+          </div>
+        </div>
+        <div class="xp-bar-bg">
+          <div class="xp-bar-fill" id="xpFill"></div>
+        </div>
+        <div class="xp-to-next">660 XP needed to reach Level 8 · Platinum Tier</div>
+      </div>
+      <div class="tier-row">
+        <div class="tier-pill bronze">🥉 Bronze</div>
+        <div class="tier-pill silver">🥈 Silver</div>
+        <div class="tier-pill gold current">🥇 Gold ←</div>
+        <div class="tier-pill platinum">💎 Platinum</div>
+        <div class="tier-pill diamond">💠 Diamond</div>
+      </div>
+    </div>
+ 
+    <!-- Streak -->
+    <div class="streak-card">
+      <div class="card-title" style="color:#fff; margin-bottom:8px">🔥 Daily Streak</div>
+      <div class="streak-num">12</div>
+      <div class="streak-label">Day Streak — Keep it burning!</div>
+      <div class="streak-days">
+        <div class="streak-day done">M</div>
+        <div class="streak-day done">T</div>
+        <div class="streak-day done">W</div>
+        <div class="streak-day done">T</div>
+        <div class="streak-day done">F</div>
+        <div class="streak-day done">S</div>
+        <div class="streak-day today">S</div>
+      </div>
+      <div style="margin-top:20px; position:relative; z-index:1;">
+        <div style="font-size:12px; opacity:.8; margin-bottom:12px">🎁 Streak Bonus unlocks in <strong>3 more days</strong></div>
+        <button class="btn-claim" onclick="claimBonus(this)">Claim Daily Check-in (+50 XP)</button>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- MILESTONE TIMELINE -->
+  <div class="card" style="margin-bottom:24px">
+    <div class="section-tag">🗺️ Journey</div>
+    <div class="card-title">Level Milestones</div>
+    <div class="milestone-track">
+      <div class="milestone-line"></div>
+      <div class="milestone-progress" id="milestoneProg"></div>
+      <div class="milestone-node">
+        <div class="milestone-dot done">✓</div>
+        <div class="milestone-label">Lv. 1<br>Starter</div>
+        <div class="milestone-xp">0 XP</div>
+      </div>
+      <div class="milestone-node">
+        <div class="milestone-dot done">✓</div>
+        <div class="milestone-label">Lv. 3<br>Collector</div>
+        <div class="milestone-xp">500 XP</div>
+      </div>
+      <div class="milestone-node">
+        <div class="milestone-dot done">✓</div>
+        <div class="milestone-label">Lv. 5<br>Recycler</div>
+        <div class="milestone-xp">1,500 XP</div>
+      </div>
+      <div class="milestone-node">
+        <div class="milestone-dot current">7</div>
+        <div class="milestone-label">Lv. 7<br>Champion</div>
+        <div class="milestone-xp">3,000 XP</div>
+      </div>
+      <div class="milestone-node">
+        <div class="milestone-dot locked">🔒</div>
+        <div class="milestone-label">Lv. 9<br>Legend</div>
+        <div class="milestone-xp">5,000 XP</div>
+      </div>
+      <div class="milestone-node">
+        <div class="milestone-dot locked">🔒</div>
+        <div class="milestone-label">Lv. 12<br>EcoHero</div>
+        <div class="milestone-xp">10,000 XP</div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- CHALLENGES + LEADERBOARD -->
+  <div class="two-col">
+    <!-- Challenges -->
+    <div class="card">
+      <div class="section-tag">⚡ Active</div>
+      <div class="card-title">Daily & Weekly Challenges</div>
+      <div class="challenge-list">
+        <div class="challenge-item complete">
+          <div class="challenge-icon">♻️</div>
+          <div class="challenge-body">
+            <div class="challenge-name">Collect 10 kg Today</div>
+            <div class="challenge-desc">Record 10 kg in a single day</div>
+            <div class="challenge-prog-bg">
+              <div class="challenge-prog-fill" style="width:100%"></div>
+            </div>
+          </div>
+          <div class="challenge-check">✓</div>
+        </div>
+        <div class="challenge-item" onclick="addXP(100, 'Challenge completed!')">
+          <div class="challenge-icon">🧴</div>
+          <div class="challenge-body">
+            <div class="challenge-name">Plastic Pioneer</div>
+            <div class="challenge-desc">Collect 5 kg of plastic this week (4/5 kg)</div>
+            <div class="challenge-prog-bg">
+              <div class="challenge-prog-fill" style="width:80%"></div>
+            </div>
+          </div>
+          <div class="challenge-xp">+100 XP</div>
+        </div>
+        <div class="challenge-item" onclick="addXP(200, 'Paper master unlocked!')">
+          <div class="challenge-icon">📄</div>
+          <div class="challenge-body">
+            <div class="challenge-name">Paper Master</div>
+            <div class="challenge-desc">Collect paper 3 days in a row (2/3)</div>
+            <div class="challenge-prog-bg">
+              <div class="challenge-prog-fill" style="width:66%"></div>
+            </div>
+          </div>
+          <div class="challenge-xp">+200 XP</div>
+        </div>
+        <div class="challenge-item" onclick="addXP(500, 'Weekly legend achieved!')">
+          <div class="challenge-icon">🌟</div>
+          <div class="challenge-body">
+            <div class="challenge-name">Weekly Legend</div>
+            <div class="challenge-desc">Collect 50 kg across all materials (31/50 kg)</div>
+            <div class="challenge-prog-bg">
+              <div class="challenge-prog-fill" style="width:62%"></div>
+            </div>
+          </div>
+          <div class="challenge-xp">+500 XP</div>
+        </div>
+        <div class="challenge-item">
+          <div class="challenge-icon">👥</div>
+          <div class="challenge-body">
+            <div class="challenge-name">Refer a Picker</div>
+            <div class="challenge-desc">Refer 1 new waste picker to the platform</div>
+            <div class="challenge-prog-bg">
+              <div class="challenge-prog-fill" style="width:0%"></div>
+            </div>
+          </div>
+          <div class="challenge-xp">+300 XP</div>
+        </div>
+      </div>
+    </div>
+ 
+    <!-- Leaderboard -->
+    <div class="card">
+      <div class="section-tag">📊 Rankings</div>
+      <div class="card-title">Community Leaderboard</div>
+      <div class="leaderboard-list">
+        <div class="lb-item">
+          <span class="lb-rank first">1</span>
+          <div class="lb-avatar">👩‍🌾</div>
+          <div class="lb-name">Nomsa Dlamini</div>
+          <span class="lb-medal">🥇</span>
+          <span class="lb-xp">5,210 XP</span>
+        </div>
+        <div class="lb-item">
+          <span class="lb-rank second">2</span>
+          <div class="lb-avatar">🧑‍🔧</div>
+          <div class="lb-name">Bongani Moyo</div>
+          <span class="lb-medal">🥈</span>
+          <span class="lb-xp">4,680 XP</span>
+        </div>
+        <div class="lb-item me">
+          <span class="lb-rank third">3</span>
+          <div class="lb-avatar">🧑‍🌾</div>
+          <div class="lb-name">Sipho Nkosi <span class="lb-you">YOU</span></div>
+          <span class="lb-medal">🥉</span>
+          <span class="lb-xp" id="lbXP">3,840 XP</span>
+        </div>
+        <div class="lb-item">
+          <span class="lb-rank">4</span>
+          <div class="lb-avatar">👩‍💼</div>
+          <div class="lb-name">Thandi Khumalo</div>
+          <span class="lb-xp">3,200 XP</span>
+        </div>
+        <div class="lb-item">
+          <span class="lb-rank">5</span>
+          <div class="lb-avatar">🧑‍🦲</div>
+          <div class="lb-name">Joseph Sithole</div>
+          <span class="lb-xp">2,950 XP</span>
+        </div>
+        <div class="lb-item">
+          <span class="lb-rank">6</span>
+          <div class="lb-avatar">👩‍🦱</div>
+          <div class="lb-name">Priya Naidoo</div>
+          <span class="lb-xp">2,710 XP</span>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- BADGES -->
+  <div class="card" style="margin-top:24px">
+    <div class="section-tag">🏅 Collection</div>
+    <div class="card-title">Badge Cabinet</div>
+    <div class="badges-grid">
+      <div class="badge-item" onclick="showBadge('First Collection', '50 XP earned')">
+        <div class="badge-emoji">🌱</div>
+        <div class="badge-name">First Collection</div>
+      </div>
+      <div class="badge-item new" onclick="showBadge('Plastic Hero', '200 XP earned')">
+        <div class="badge-emoji">♻️</div>
+        <div class="badge-name">Plastic Hero</div>
+      </div>
+      <div class="badge-item" onclick="showBadge('Early Bird', 'Logged before 7am')">
+        <div class="badge-emoji">🌅</div>
+        <div class="badge-name">Early Bird</div>
+      </div>
+      <div class="badge-item new" onclick="showBadge('10-Day Streak', 'Fire streak master')">
+        <div class="badge-emoji">🔥</div>
+        <div class="badge-name">10-Day Streak</div>
+      </div>
+      <div class="badge-item" onclick="showBadge('Ton Club', '100 kg total')">
+        <div class="badge-emoji">🏋️</div>
+        <div class="badge-name">Ton Club</div>
+      </div>
+      <div class="badge-item" onclick="showBadge('Top 10%', 'Leaderboard elite')">
+        <div class="badge-emoji">🏆</div>
+        <div class="badge-name">Top 10%</div>
+      </div>
+      <div class="badge-item locked">
+        <div class="badge-emoji">💎</div>
+        <div class="badge-name">Diamond Picker</div>
+      </div>
+      <div class="badge-item locked">
+        <div class="badge-emoji">🌍</div>
+        <div class="badge-name">EcoWarrior</div>
+      </div>
+    </div>
+  </div>
+ 
+  <!-- REAL-TIME ACTIVITY FEED -->
+  <div class="card" style="margin-top:24px">
+    <div class="section-tag">📡 Live</div>
+    <div class="card-title">Real-Time Activity Feed</div>
+    <div id="feedList">
+      <div class="feed-item">
+        <div class="feed-dot xp">⭐</div>
+        <div class="feed-text">
+          <strong>+120 XP — Transaction Logged</strong>
+          <span>Collected 8.5 kg of plastics · Recorded by you</span>
+        </div>
+        <span class="feed-time">2 min ago</span>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot badge">🏅</div>
+        <div class="feed-text">
+          <strong>Badge Unlocked: Plastic Hero</strong>
+          <span>You've collected 20+ kg of plastic materials</span>
+        </div>
+        <span class="feed-time">1 hr ago</span>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot rank">📈</div>
+        <div class="feed-text">
+          <strong>Rank Up — You moved to #3</strong>
+          <span>You surpassed Thandi Khumalo on the leaderboard</span>
+        </div>
+        <span class="feed-time">3 hrs ago</span>
+      </div>
+      <div class="feed-item">
+        <div class="feed-dot streak">🔥</div>
+        <div class="feed-text">
+          <strong>10-Day Streak Milestone</strong>
+          <span>Badge + 200 XP bonus awarded</span>
+        </div>
+        <span class="feed-time">Yesterday</span>
+      </div>
+    </div>
+  </div>
+ 
+</main>
+ 
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+</body>
+<script src="RewardsSystem.js"></script>
+</html>

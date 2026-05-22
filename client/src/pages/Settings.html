@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="Settings.css">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="ecocycle-logo">
+      <div class="brand-icon">
+        <svg width="22" height="22" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5"/><path d="M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12"/><path d="m14 16-3 3 3 3"/><path d="M8.293 13.596 7.196 9.5 3.1 10.598"/><path d="m9.344 5.811 1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843"/><path d="m13.378 9.633 4.096 1.098 1.097-4.096"/></svg>
+      </div>
+      <div>
+        <div class="ecocycle-wordmark">Ecocycle</div>
+        <div class="ecocycle-sub">Informal Pickers Management</div>
+      </div>
+    </div>
+  </div>
+  <button class="topbar-logout">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/></svg>
+    Logout
+  </button>
+</header>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <a class="nav-item" href="EmployeeDashboard.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg>
+      Dashboard
+    </a>
+    <a class="nav-item" href="RegisterUsers.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" x2="19" y1="8" y2="14"/><line x1="22" x2="16" y1="11" y2="11"/></svg>
+      Register Waste Picker
+    </a>
+    <a class="nav-item" href="ViewRegisteredUser.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></svg>
+      Registered Pickers
+    </a>
+    <a class="nav-item" href="RecordTransaction_Employee.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/></svg>
+      Record Transaction
+    </a>
+    <a class="nav-item" href="IncomeBoard.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="12" x2="12" y1="1" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      Income Board
+    </a>
+    <a class="nav-item" href="Environmental.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+      Environmental Dashboard
+    </a>
+    <a class="nav-item" href="RewardsSystems.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M5 6H3a2 2 0 0 0 2 2"/><path d="M19 6h2a2 2 0 0 1-2 2"/></svg>
+      Rewards System
+    </a>
+    <a class="nav-item active" href="Settings.html">
+      <svg fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Settings
+    </a>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- SETTINGS NAV -->
+    <div class="settings-nav">
+      <h2>Account</h2>
+      <div class="snav-item active" onclick="showSection('profile', this)">
+        <svg class="sicon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        Profile
+      </div>
+      <div class="snav-item" onclick="showSection('security', this)">
+        <svg class="sicon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        Security
+      </div>
+      <div class="snav-item" onclick="showSection('notifications', this)">
+        <svg class="sicon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        Notifications <span class="notif-badge">3</span>
+      </div>
+      <div class="snav-sep"></div>
+      <h2>App</h2>
+      <div class="snav-item" onclick="showSection('appearance', this)">
+        <svg class="sicon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 12c-2.5-2-4-4.5-4-7a4 4 0 0 1 8 0c0 2.5-1.5 5-4 7z"/></svg>
+        Appearance
+      </div>
+      <div class="snav-item" onclick="showSection('language', this)">
+        <svg class="sicon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Language & Region
+      </div>
+      <div class="snav-item" onclick="showSection('privacy', this)">
+        <svg class="sicon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Privacy & Data
+      </div>
+      <div class="snav-sep"></div>
+      <h2>Integrations</h2>
+      <div class="snav-item" onclick="showSection('connected', this)">
+        <svg class="sicon" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        Connected Apps
+      </div>
+      <div class="snav-sep"></div>
+      <div class="snav-item" onclick="showSection('danger', this)" style="color:#e53935">
+        <svg class="sicon" fill="none" stroke="#e53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+        Danger Zone
+      </div>
+    </div>
+
+    <!-- SETTINGS CONTENT -->
+    <div class="settings-content">
+
+      <!-- ══ PROFILE ══ -->
+      <div class="settings-section visible" id="section-profile">
+        <div class="page-header">
+          <h1>Profile Settings</h1>
+          <p>Manage your personal information and picker details</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <div class="card-header-text">
+              <strong>Profile Photo & Name</strong>
+              <span>Your public identity within Ecocycle</span>
+            </div>
+          </div>
+          <div class="avatar-wrap">
+            <div class="avatar-circle" title="Click to change">
+              <svg width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+            </div>
+            <div class="avatar-info">
+              <strong>Sipho Nkosi</strong>
+              <span>Waste Picker · ID: #WP-0047</span>
+              <br>
+              <button class="btn-secondary" onclick="toast('Profile', 'Upload Photo', 'Feature coming soon')">
+                <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                Change Photo
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Full Name</div>
+                <div class="setting-desc">As it appears on your official record</div>
+              </div>
+              <div class="setting-right">
+                <input class="setting-input" type="text" value="Sipho Nkosi">
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Phone Number</div>
+                <div class="setting-desc">Used for notifications and account recovery</div>
+              </div>
+              <div class="setting-right">
+                <input class="setting-input" type="tel" value="+27 71 234 5678">
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Email Address</div>
+                <div class="setting-desc">Used for reports and alerts</div>
+              </div>
+              <div class="setting-right">
+                <input class="setting-input" type="email" value="sipho@example.com">
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Zone / Collection Area</div>
+                <div class="setting-desc">Your assigned waste collection area</div>
+              </div>
+              <div class="setting-right">
+                <select class="setting-select">
+                  <option>Soweto Zone 4</option>
+                  <option>Alexandra Zone 1</option>
+                  <option>Diepsloot Zone 2</option>
+                  <option>Midrand Zone 3</option>
+                </select>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">ID Number</div>
+                <div class="setting-desc">South African ID or passport number</div>
+              </div>
+              <div class="setting-right">
+                <input class="setting-input" type="text" value="8204155060087">
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="toast('check', 'Profile Saved', 'Your changes have been updated')">Save Changes</button>
+            <button class="btn-ghost">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ SECURITY ══ -->
+      <div class="settings-section" id="section-security">
+        <div class="page-header">
+          <h1>Security</h1>
+          <p>Manage your password and account access</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/></svg>
+            </div>
+            <div class="card-header-text">
+              <strong>Change Password</strong>
+              <span>Choose a strong, unique password</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Current Password</div>
+              </div>
+              <div class="setting-right">
+                <input class="setting-input" type="password" placeholder="Enter current password" id="currentPwd">
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">New Password</div>
+              </div>
+              <div class="setting-right" style="flex-direction:column; align-items:flex-end">
+                <input class="setting-input" type="password" placeholder="Min. 8 characters" id="newPwd" oninput="updateStrength(this.value)">
+                <div class="strength-bar" id="strengthBar">
+                  <div class="strength-seg" id="s1"></div>
+                  <div class="strength-seg" id="s2"></div>
+                  <div class="strength-seg" id="s3"></div>
+                  <div class="strength-seg" id="s4"></div>
+                </div>
+                <div class="strength-label" id="strengthLabel">Enter a new password</div>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Confirm New Password</div>
+              </div>
+              <div class="setting-right">
+                <input class="setting-input" type="password" placeholder="Repeat new password">
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="toast('lock', 'Password Updated', 'Your password has been changed')">Update Password</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" x2="12.01" y1="18" y2="18"/></svg>
+            </div>
+            <div class="card-header-text">
+              <strong>Two-Factor Authentication</strong>
+              <span>Add an extra layer of security</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Enable 2FA via SMS</div>
+                <div class="setting-desc">Receive a code on +27 71 *** 5678 when logging in</div>
+              </div>
+              <div class="setting-right">
+                <label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Authenticator App</div>
+                <div class="setting-desc">Use Google Authenticator or similar</div>
+              </div>
+              <div class="setting-right">
+                <label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" x2="16" y1="21" y2="21"/><line x1="12" x2="12" y1="17" y2="21"/></svg>
+            </div>
+            <div class="card-header-text">
+              <strong>Active Sessions</strong>
+              <span>Devices currently logged into your account</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Chrome on Windows — Johannesburg</div>
+                <div class="setting-desc">This device · Active now</div>
+              </div>
+              <div class="setting-right">
+                <span style="font-size:12px; color:var(--green-dark); font-weight:700; background:var(--green-pale); padding:4px 10px; border-radius:20px;">Current</span>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Safari on iPhone — Soweto</div>
+                <div class="setting-desc">Last active: 2 days ago</div>
+              </div>
+              <div class="setting-right">
+                <button class="btn-ghost" style="padding:6px 14px; font-size:12px;" onclick="toast('logout', 'Session Revoked', 'That device has been signed out')">Revoke</button>
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-danger" onclick="toast('alert', 'All sessions revoked', 'You have been signed out of all other devices')">Sign out all devices</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ NOTIFICATIONS ══ -->
+      <div class="settings-section" id="section-notifications">
+        <div class="page-header">
+          <h1>Notifications</h1>
+          <p>Control how and when Ecocycle contacts you</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            </div>
+            <div class="card-header-text">
+              <strong>Push Notifications</strong>
+              <span>Alerts sent directly to your device</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">New Transaction Recorded</div>
+                <div class="setting-desc">Notify when a transaction is logged for your account</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Rewards & XP Updates</div>
+                <div class="setting-desc">Badges earned, level-ups, challenge completions</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Leaderboard Changes</div>
+                <div class="setting-desc">When your rank changes position</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Daily Streak Reminder</div>
+                <div class="setting-desc">Reminder to check in before your streak resets</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Income Payments</div>
+                <div class="setting-desc">Notify when a payment is processed</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Platform Announcements</div>
+                <div class="setting-desc">News and updates from Ecocycle</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="card-header-text">
+              <strong>Email & SMS</strong>
+              <span>Communications sent to your contact details</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Weekly Summary Email</div>
+                <div class="setting-desc">A weekly digest of your collections and earnings</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">SMS Alerts</div>
+                <div class="setting-desc">Critical alerts sent via SMS to your registered number</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Quiet Hours</div>
+                <div class="setting-desc">Suppress all notifications between set hours</div>
+              </div>
+              <div class="setting-right">
+                <select class="setting-select">
+                  <option>Off</option>
+                  <option selected>10pm – 7am</option>
+                  <option>9pm – 8am</option>
+                  <option>Always on</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="toast('check', 'Notification Settings Saved', 'Your preferences have been updated')">Save Preferences</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ APPEARANCE ══ -->
+      <div class="settings-section" id="section-appearance">
+        <div class="page-header">
+          <h1>Appearance</h1>
+          <p>Personalise the look and feel of Ecocycle</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20"/><path d="M12 12c-2.5-2-4-4.5-4-7a4 4 0 0 1 8 0c0 2.5-1.5 5-4 7z"/></svg>
+            </div>
+            <div class="card-header-text"><strong>Theme</strong><span>Choose your preferred colour mode</span></div>
+          </div>
+          <div class="card-body">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Colour Mode</div>
+                <div class="setting-desc">Light mode, dark mode, or follow your system</div>
+              </div>
+              <div class="setting-right">
+                <select class="setting-select" onchange="toast('palette', 'Theme changed', 'Appearance updated')">
+                  <option selected>Light</option>
+                  <option>Dark</option>
+                  <option>System Default</option>
+                </select>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Accent Colour</div>
+                <div class="setting-desc">Choose the primary highlight colour</div>
+              </div>
+              <div class="setting-right">
+                <div class="swatches">
+                  <div class="swatch active" style="background:#4caf50;" title="Green" onclick="setSwatch(this)"></div>
+                  <div class="swatch" style="background:#2196f3;" title="Blue" onclick="setSwatch(this)"></div>
+                  <div class="swatch" style="background:#9c27b0;" title="Purple" onclick="setSwatch(this)"></div>
+                  <div class="swatch" style="background:#ff5722;" title="Orange" onclick="setSwatch(this)"></div>
+                  <div class="swatch" style="background:#f5c842;" title="Gold" onclick="setSwatch(this)"></div>
+                </div>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Font Size</div>
+                <div class="setting-desc">Adjust text size across the application</div>
+              </div>
+              <div class="setting-right">
+                <select class="setting-select">
+                  <option>Small</option>
+                  <option selected>Medium</option>
+                  <option>Large</option>
+                </select>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Compact View</div>
+                <div class="setting-desc">Reduce spacing for more information on screen</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Animations</div>
+                <div class="setting-desc">Enable interface transitions and motion effects</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="toast('check', 'Appearance Saved', 'Your theme preferences are applied')">Apply Theme</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ LANGUAGE & REGION ══ -->
+      <div class="settings-section" id="section-language">
+        <div class="page-header">
+          <h1>Language & Region</h1>
+          <p>Localise Ecocycle to your preference</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" x2="22" y1="12" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="card-header-text"><strong>Localisation</strong><span>Language, currency, and date formats</span></div>
+          </div>
+          <div class="card-body">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Display Language</div>
+                <div class="setting-desc">App interface language</div>
+              </div>
+              <div class="setting-right">
+                <select class="setting-select">
+                  <option selected>English</option>
+                  <option>Zulu (isiZulu)</option>
+                  <option>Xhosa (isiXhosa)</option>
+                  <option>Sotho (Sesotho)</option>
+                  <option>Afrikaans</option>
+                  <option>Tswana (Setswana)</option>
+                </select>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Currency</div>
+                <div class="setting-desc">Currency displayed on income and transactions</div>
+              </div>
+              <div class="setting-right">
+                <select class="setting-select">
+                  <option selected>ZAR (R)</option>
+                  <option>USD ($)</option>
+                  <option>EUR (€)</option>
+                </select>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Date Format</div>
+                <div class="setting-desc">How dates are displayed throughout the app</div>
+              </div>
+              <div class="setting-right">
+                <select class="setting-select">
+                  <option selected>DD/MM/YYYY</option>
+                  <option>MM/DD/YYYY</option>
+                  <option>YYYY-MM-DD</option>
+                </select>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Time Zone</div>
+                <div class="setting-desc">Used for timestamps and reports</div>
+              </div>
+              <div class="setting-right">
+                <select class="setting-select">
+                  <option selected>Africa/Johannesburg (UTC+2)</option>
+                  <option>UTC</option>
+                  <option>Africa/Cape_Town</option>
+                </select>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Weight Unit</div>
+                <div class="setting-desc">Unit used for material measurements</div>
+              </div>
+              <div class="setting-right">
+                <select class="setting-select">
+                  <option selected>Kilograms (kg)</option>
+                  <option>Pounds (lbs)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="toast('check', 'Region Settings Saved', 'Localisation updated successfully')">Save Region Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ PRIVACY ══ -->
+      <div class="settings-section" id="section-privacy">
+        <div class="page-header">
+          <h1>Privacy & Data</h1>
+          <p>Control how your data is collected and shared</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="card-header-text"><strong>Privacy Controls</strong><span>Manage your data sharing preferences</span></div>
+          </div>
+          <div class="card-body">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Show on Leaderboard</div>
+                <div class="setting-desc">Allow your name and XP to appear on the community leaderboard</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Share Collection Stats</div>
+                <div class="setting-desc">Allow anonymised data to improve environmental reports</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Analytics & Usage Data</div>
+                <div class="setting-desc">Help Ecocycle improve the platform with usage insights</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Marketing Communications</div>
+                <div class="setting-desc">Receive offers and news from Ecocycle partners</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox"><span class="toggle-slider"></span></label></div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Location Tracking</div>
+                <div class="setting-desc">Allow location data when recording transactions</div>
+              </div>
+              <div class="setting-right"><label class="toggle"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+            </div>
+            <div class="card-header-text"><strong>Your Data</strong><span>Access, export, or request removal of your data</span></div>
+          </div>
+          <div class="card-body">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Download My Data</div>
+                <div class="setting-desc">Export all your collections, transactions, and rewards history</div>
+              </div>
+              <div class="setting-right">
+                <button class="btn-secondary" onclick="toast('download', 'Export Started', 'Your data export is being prepared')">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" x2="12" y1="15" y2="3"/></svg>
+                  Export Data
+                </button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Privacy Policy</div>
+                <div class="setting-desc">Read how Ecocycle uses your personal information</div>
+              </div>
+              <div class="setting-right">
+                <button class="btn-secondary">
+                  <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  View Policy
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-primary" onclick="toast('check', 'Privacy Settings Saved', 'Your preferences have been updated')">Save Privacy Settings</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ CONNECTED APPS ══ -->
+      <div class="settings-section" id="section-connected">
+        <div class="page-header">
+          <h1>Connected Apps</h1>
+          <p>Manage external services and integrations</p>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-header-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            </div>
+            <div class="card-header-text"><strong>Integrations</strong><span>Apps with access to your Ecocycle account</span></div>
+          </div>
+          <div class="card-body">
+            <div class="connected-item">
+              <div class="conn-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+              </div>
+              <div class="conn-info">
+                <strong>Google Sheets</strong>
+                <span>Syncs transaction records to your spreadsheet</span>
+              </div>
+              <span class="conn-status connected">Connected</span>
+              <button class="btn-ghost" style="margin-left:12px; padding:6px 14px; font-size:12px;" onclick="toast('unlink', 'Disconnected', 'Google Sheets has been unlinked')">Disconnect</button>
+            </div>
+            <div class="connected-item">
+              <div class="conn-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+              <div class="conn-info">
+                <strong>WhatsApp Notifications</strong>
+                <span>Receive transaction alerts via WhatsApp</span>
+              </div>
+              <span class="conn-status connected">Connected</span>
+              <button class="btn-ghost" style="margin-left:12px; padding:6px 14px; font-size:12px;" onclick="toast('unlink', 'Disconnected', 'WhatsApp notifications disabled')">Disconnect</button>
+            </div>
+            <div class="connected-item">
+              <div class="conn-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" x2="23" y1="10" y2="10"/></svg>
+              </div>
+              <div class="conn-info">
+                <strong>PayFast Payments</strong>
+                <span>Link for direct income disbursement</span>
+              </div>
+              <span class="conn-status disconnected">Not Connected</span>
+              <button class="btn-secondary" style="margin-left:12px;" onclick="toast('link', 'PayFast', 'Redirecting to connect PayFast...')">Connect</button>
+            </div>
+            <div class="connected-item">
+              <div class="conn-icon">
+                <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="conn-info">
+                <strong>Google Maps</strong>
+                <span>Zone mapping and route tracking</span>
+              </div>
+              <span class="conn-status disconnected">Not Connected</span>
+              <button class="btn-secondary" style="margin-left:12px;" onclick="toast('link', 'Google Maps', 'Connecting...')">Connect</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══ DANGER ZONE ══ -->
+      <div class="settings-section" id="section-danger">
+        <div class="page-header">
+          <h1>Danger Zone</h1>
+          <p>Irreversible account actions — proceed with caution</p>
+        </div>
+
+        <div class="danger-card">
+          <div class="danger-header">
+            <svg width="18" height="18" fill="none" stroke="#e53935" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+            <strong>Danger Zone</strong>
+          </div>
+          <div style="padding: 8px 0;">
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Reset Rewards & XP</div>
+                <div class="setting-desc" style="color:#e57373">This will permanently erase all your XP, badges, and leaderboard position. Cannot be undone.</div>
+              </div>
+              <div class="setting-right">
+                <button class="btn-danger" onclick="confirmAction('reset-rewards', 'Reset all rewards?', 'This will erase all your XP and badges permanently.')">Reset Rewards</button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Deactivate Account</div>
+                <div class="setting-desc" style="color:#e57373">Temporarily disable your account. You can reactivate by contacting support.</div>
+              </div>
+              <div class="setting-right">
+                <button class="btn-danger" onclick="confirmAction('deactivate', 'Deactivate account?', 'You will be signed out and your account will be suspended.')">Deactivate</button>
+              </div>
+            </div>
+            <div class="setting-row">
+              <div class="setting-left">
+                <div class="setting-label">Delete Account</div>
+                <div class="setting-desc" style="color:#e57373">Permanently delete your account and all associated data. This action is irreversible.</div>
+              </div>
+              <div class="setting-right">
+                <button class="btn-danger" onclick="confirmAction('delete', 'Delete your account?', 'All data will be permanently erased. This cannot be undone.')">Delete Account</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+<script src="Settings.js"></script>
+</html>
