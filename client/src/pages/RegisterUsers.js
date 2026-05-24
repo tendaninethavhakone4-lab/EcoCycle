@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 //This shows the messages after registering
 function showToast(msg, success = true) {
   const t = document.getElementById("toast");
@@ -64,7 +64,7 @@ function clearForm() {
     document.getElementById(id).value = "";
   });
 }
-=======
+
 //This shows the messages after registering
 function showToast(msg, success = true) {
   const t = document.getElementById("toast");
@@ -130,4 +130,3 @@ function clearForm() {
     document.getElementById(id).value = "";
   });
 }
->>>>>>> dev-momo

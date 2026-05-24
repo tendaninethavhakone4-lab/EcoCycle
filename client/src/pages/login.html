@@ -67,6 +67,7 @@
 
   <script>
     function handleLogin() {
+      window.location.href = 'user-selection.html'; // Redirect to role selection on successful login (placeholder)
       const email = document.getElementById('email').value;
       const pass = document.getElementById('password').value;
       if (!email || !pass) { alert('Please fill in all fields.'); return; }

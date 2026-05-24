@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // It seeds the demo if the local storage is empty
 function seedIfEmpty() {
   const existing = JSON.parse(localStorage.getItem("ecocycle_pickers") || "[]");
@@ -245,7 +245,6 @@ document.head.insertAdjacentHTML(
 );
 
 renderTable();
-=======
 // It seeds the demo if the local storage is empty
 function seedIfEmpty() {
   const existing = JSON.parse(localStorage.getItem("ecocycle_pickers") || "[]");
@@ -492,4 +491,4 @@ document.head.insertAdjacentHTML(
 );
 
 renderTable();
->>>>>>> dev-momo
+

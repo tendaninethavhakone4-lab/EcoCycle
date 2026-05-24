@@ -1,8 +1,3 @@
-/* ═══════════════════════════════════════════════════════════
-   ECOCYCLE — SHARED ADMIN CSS
-   Used by: admin-dashboard, AdminIncomeBoard,
-            AdminEnvironmentalBoard, adminsettings
-═══════════════════════════════════════════════════════════ */
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
