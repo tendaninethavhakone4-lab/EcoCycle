@@ -5,4 +5,5 @@ EcoCycle is a digital recycling platform designed to promote sustainable waste m
 Source code location:
 client/src/pages/
 
-submitted branch : testing
+submitted branch : Testing
+ALL our main files and documents are under the above branch
