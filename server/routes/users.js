@@ -6,6 +6,8 @@ const router = express.Router();
 
 const SECRET = process.env.JWT_SECRET || 'ecocycle_secret_key_change_later';
 
+const { sendWelcomeEmail, sendForgotPasswordEmail } = require('../services/email');
+
 const { authRequired } = require('../middleware/auth');
 
 const users = [
@@ -66,15 +68,17 @@ router.post('/register', async (req, res) => {
     email,
     password: hashedPassword,
     role: 'user',       
-    approved: false,   
+    approved: true,   
   };
 
  
   users.push(newUser);
 
+sendWelcomeEmail(newUser.email, newUser.name)
+  .catch(err => console.error('Welcome email failed:', err.message));
 
   res.status(201).json({
-    message: 'Account created successfully! An administrator will review and approve it. You will receive an email when it is active.',
+    message: 'Account created successfully!',
     user: { id: newUser.id, name: newUser.name, email: newUser.email, role: newUser.role }
   });
 });
@@ -100,13 +104,6 @@ router.post('/login', async (req, res) => {
     return res.status(401).json({ error: 'Invalid email or password.' });
   }
 
-// Check if the account has been approved by an admin
-
-if (user.approved === false) {
-  return res.status(403).json({
-    error: 'Your account is pending admin approval. You will be notified once it is active.'
-  });
-}
 
   const token = jwt.sign(
     { id: user.id, email: user.email, role: user.role, name: user.name },
@@ -175,5 +172,98 @@ router.put('/approve/:id', (req, res) => {
   });
 });
 
+// ─── ROUTE 6: FORGOT PASSWORD ─────────────────────────────────────────────
+
+router.post('/forgot-password', async (req, res) => {
+
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ error: 'Please enter your email address.' });
+  }
+
+
+  const user = users.find(u => u.email === email);
+
+
+  if (!user) {
+    return res.json({
+      message: 'If an account with that email exists you will receive a reset link shortly.'
+    });
+  }
+
+
+  const resetToken = Math.random().toString(36).slice(2) + Date.now().toString(36);
+  const resetExpiry = Date.now() + 60 * 60 * 1000; 
+
+  user.resetToken  = resetToken;
+  user.resetExpiry = resetExpiry;
+
+  await sendForgotPasswordEmail(user.email, resetToken);
+
+  res.json({
+    message: 'If an account with that email exists you will receive a reset link shortly.'
+  });
+});
+
+// ─── ROUTE 7: RESET PASSWORD ──────────────────────────────────────────────
+
+router.post('/reset-password', async (req, res) => {
+
+  const { token, password } = req.body;
+
+  if (!token || !password) {
+    return res.status(400).json({ error: 'Token and new password are required.' });
+  }
+
+  if (password.length < 8) {
+    return res.status(400).json({ error: 'Password must be at least 8 characters.' });
+  }
+
+  const user = users.find(u => u.resetToken === token);
+
+  if (!user || !user.resetExpiry || Date.now() > user.resetExpiry) {
+    return res.status(400).json({ error: 'Invalid or expired reset link. Please request a new one.' });
+  }
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  user.password    = hashedPassword;
+  user.resetToken  = null;
+  user.resetExpiry = null;
+
+  res.json({ message: 'Password reset successfully! You can now log in with your new password.' });
+});
+
+// ─── ROUTE 8: CHANGE PASSWORD ─────────────────────────────────────────────
+
+router.post('/change-password', authRequired, async (req, res) => {
+
+  const { currentPassword, newPassword } = req.body;
+
+  if (!currentPassword || !newPassword) {
+    return res.status(400).json({ error: 'Please fill in all fields.' });
+  }
+
+  if (newPassword.length < 8) {
+    return res.status(400).json({ error: 'New password must be at least 8 characters.' });
+  }
+
+  const user = users.find(u => u.id === req.user.id);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found.' });
+  }
+
+  const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+  if (!passwordMatch) {
+    return res.status(401).json({ error: 'Current password is incorrect.' });
+  }
+
+
+  user.password = await bcrypt.hash(newPassword, 10);
+
+  res.json({ message: 'Password changed successfully!' });
+});
 
 module.exports = router;

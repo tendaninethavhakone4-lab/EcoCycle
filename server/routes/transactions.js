@@ -3,6 +3,8 @@ const router  = express.Router();
 
 const { authRequired, requireRole } = require('../middleware/auth');
 
+const { sendTransactionSMS } = require('../services/sms');
+
 // ─── IN-MEMORY TRANSACTION STORAGE ───────────────────────────────────────
 
 const transactions = [
@@ -128,6 +130,16 @@ router.post('/', authRequired, (req, res) => {
   };
 
   transactions.push(newTransaction);
+
+// Send SMS notification to picker if they have a phone number
+
+sendTransactionSMS(
+  newTransaction.picker_name,
+  req.body.picker_phone || '',
+  newTransaction.material,
+  newTransaction.quantity,
+  newTransaction.total
+).catch(err => console.error('SMS notification failed:', err.message));
 
   res.status(201).json({
     message: `Transaction recorded successfully! Total payout: R${total}`,
