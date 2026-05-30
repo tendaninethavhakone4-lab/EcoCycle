@@ -266,4 +266,37 @@ router.post('/change-password', authRequired, async (req, res) => {
   res.json({ message: 'Password changed successfully!' });
 });
 
+// ─── ROUTE 9: UPDATE PROFILE ──────────────────────────────────────────────
+
+router.put('/profile', authRequired, async (req, res) => {
+
+  const { name, email } = req.body;
+
+  if (!name && !email) {
+    return res.status(400).json({ error: 'Please provide a name or email to update.' });
+  }
+
+  const user = users.find(u => u.id === req.user.id);
+
+  if (!user) {
+    return res.status(404).json({ error: 'User not found.' });
+  }
+
+
+  if (email && email !== user.email) {
+    const existing = users.find(u => u.email === email && u.id !== user.id);
+    if (existing) {
+      return res.status(400).json({ error: 'An account with this email already exists.' });
+    }
+    user.email = email;
+  }
+
+  if (name) user.name = name;
+
+  res.json({
+    message: 'Profile updated successfully!',
+    user: { id: user.id, name: user.name, email: user.email, role: user.role }
+  });
+});
+
 module.exports = router;

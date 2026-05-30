@@ -1,3 +1,13 @@
+  const API_BASE = 'http://localhost:3000';
+
+  function getToken() {
+  return localStorage.getItem('ecocycle_token');
+}
+
+function getUser() {
+  return JSON.parse(localStorage.getItem('ecocycle_user') || '{}');
+}
+
   let pendingAction = null;
  
   function showSection(id, el) {
@@ -39,6 +49,55 @@
     document.getElementById('strengthLabel').textContent = val.length === 0 ? 'Enter a new password' : labels[Math.max(0, score-1)];
   }
   
+  async function changePassword() {
+  const currentPwd = document.getElementById('currentPwd').value;
+  const newPwd     = document.getElementById('newPwd').value;
+
+  if (!currentPwd || !newPwd) {
+    toast('⚠️', 'Missing fields', 'Please fill in both password fields.');
+    return;
+  }
+
+  if (newPwd.length < 8) {
+    toast('⚠️', 'Password too short', 'New password must be at least 8 characters.');
+    return;
+  }
+
+  const btn = document.querySelector('button[onclick="changePassword()"]');
+  if (btn) { btn.disabled = true; btn.textContent = 'Saving...'; }
+
+try {
+    const response = await fetch(`${API_BASE}/api/auth/change-password`, {
+      method: 'POST',
+      headers: {
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${getToken()}`,
+      },
+      body: JSON.stringify({
+        currentPassword: currentPwd,
+        newPassword:     newPwd,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      toast('❌', 'Error', data.error || 'Failed to change password.');
+      return;
+    }
+
+    document.getElementById('currentPwd').value = '';
+    document.getElementById('newPwd').value     = '';
+    updateStrength('');
+
+    toast('✅', 'Password Changed', 'Your password has been updated successfully!');
+
+  } catch (err) {
+    toast('❌', 'Connection Error', 'Could not connect to the server. Please try again.');
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = 'Save Password'; }
+  }
+}
  
   function confirmAction(action, title, desc) {
     pendingAction = action;
@@ -54,3 +113,14 @@
     else if (pendingAction === 'reset-rewards') toast('🔄', 'Rewards Reset', 'All XP and badges have been cleared.');
     pendingAction = null;
   }
+  
+function loadUserInfo() {
+  const user = getUser();
+  if (!user) return;
+  const nameField  = document.getElementById('profileName');
+  const emailField = document.getElementById('profileEmail');
+  if (nameField)  nameField.value  = user.name  || '';
+  if (emailField) emailField.value = user.email || '';
+}
+
+document.addEventListener('DOMContentLoaded', loadUserInfo);
