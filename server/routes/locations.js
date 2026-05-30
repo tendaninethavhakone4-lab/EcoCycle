@@ -4,6 +4,10 @@ const router  = express.Router();
 
 const { authRequired } = require('../middleware/auth');
 
+// Get Google Maps API key from .env
+
+const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+
 // ─── REGION NAMES ─────────────────────────────────────────────────────────
 
 const regionNames = [
@@ -26,35 +30,31 @@ const depots = [
 
 // ─── CACHE ────────────────────────────────────────────────────────────────
 
-let cachedRegions    = null;
-let cacheTime        = null;
-const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+let cachedRegions = null;
+let cacheTime     = null;
+const CACHE_DURATION = 24 * 60 * 60 * 1000; // 24 hours
 
-// ─── HELPER: FETCH COORDINATES FROM OPENSTREETMAP ─────────────────────────
+// ─── HELPER: FETCH COORDINATES FROM GOOGLE MAPS ───────────────────────────
 
 async function getCoordinates(placeName) {
   try {
   
     const encoded = encodeURIComponent(placeName);
-    const url = `https://nominatim.openstreetmap.org/search?q=${encoded}&format=json&limit=1&countrycodes=za`;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encoded}&key=${GOOGLE_MAPS_API_KEY}`;
 
-    const response = await fetch(url, {
-      headers: {
-        'User-Agent': 'EcoCycle-App/1.0 (student project)'
-      }
-    });
 
+    const response = await fetch(url);
     const data = await response.json();
 
-  
-    if (data && data.length > 0) {
+
+    if (data.results && data.results.length > 0) {
+      const location = data.results[0].geometry.location;
       return {
-        lat: parseFloat(data[0].lat),
-        lng: parseFloat(data[0].lon),
+        lat: location.lat,
+        lng: location.lng,
       };
     }
 
- 
     return null;
 
   } catch (err) {
@@ -78,19 +78,21 @@ const fallbackCoords = {
 
 async function buildRegions() {
 
+
   if (cachedRegions && cacheTime && (Date.now() - cacheTime) < CACHE_DURATION) {
-    console.log('Using cached region coordinates');
+    console.log('Using cached region coordinates from Google Maps');
     return cachedRegions;
   }
 
-  console.log('Fetching fresh coordinates from OpenStreetMap...');
+  console.log('Fetching fresh coordinates from Google Maps API...');
 
- 
+
   const regions = await Promise.all(
     regionNames.map(async (region) => {
 
-    
+
       const coords = await getCoordinates(region.name);
+
 
       const lat = coords?.lat ?? fallbackCoords[region.id].lat;
       const lng = coords?.lng ?? fallbackCoords[region.id].lng;
@@ -111,6 +113,7 @@ async function buildRegions() {
     })
   );
 
+
   cachedRegions = regions;
   cacheTime     = Date.now();
 
@@ -126,7 +129,7 @@ router.get('/', authRequired, async (req, res) => {
     res.json({
       regions,
       depots,
-      source: 'OpenStreetMap Nominatim API',
+      source: 'Google Maps Geocoding API',
     });
 
   } catch (err) {
